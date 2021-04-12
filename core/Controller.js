@@ -12,14 +12,14 @@ module.exports=class Controller extends core{
 
     _rendering(){
 
-        if(!this.ro.getAutoRender()){
+        if(!this.ro.autoRender.get()){
             return;
         }
 
-        var renderClassName=this.ro.getRender();
+        var renderClassName=this.ro.render.get();
 
         if(!renderClassName){
-            var render=require("./Render.js");
+            var Render=require("./Render.js");
         }
         else{
             renderClassName=text.ucfirst(renderClassName)+"Render";
@@ -27,17 +27,12 @@ module.exports=class Controller extends core{
             if(!fs.existsSync(renderPath)){
                 throw new Error("\""+renderClassName+"\" class not found")
             }
-            var render=require(renderPath);
+            var Render=require(renderPath);
         }
 
-        var viewName=this.ro.getView();
+        var render = new Render(this.ro);
 
-        if(!viewName){
-            viewName=this.ro.route.action;
-        }
-
-        console.log(render);
-
+        render.rendering();
 
     }
 

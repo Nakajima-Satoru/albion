@@ -101,7 +101,12 @@ module.exports={
     },
 
     error:function(ro,error){
-        ro.exit("<pre>"+error.stack+"</pre>");
+        if(ro.project.config.debugMode){
+            ro.exit("<pre>"+error.stack+"</pre>");
+        }
+        else{
+            ro.exit("<pre>Invalid Error.</pre>");
+        }
     },
 
     

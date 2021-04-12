@@ -1,4 +1,9 @@
+var text = require("./text.js");
+var fs = require("fs");
+
 var requestObject=function(params){
+
+    var cont=this;
 
     this._str="";
 
@@ -11,6 +16,7 @@ var requestObject=function(params){
     var _exited=false;
     var _autoRender=false;
     var _render=null;
+    var _template=null;
     var _view=null;
 
     if(this.project.config.responseHeader){
@@ -96,32 +102,92 @@ var requestObject=function(params){
         return string;
     };
 
-    this.setAutoRender=function(status){
-        _autoRender=status;
-        return this;
+    this.autoRender={
+        set:function(status){
+            _autoRender=status;
+            return this;
+        },
+        get:function(){
+            return _autoRender;
+        },
     };
 
-    this.getAutoRender=function(){
-        return _autoRender;
-    }
-
-    this.setRender=function(renderName){
-        _render=renderName;
-        return this;
+    this.render={
+        set:function(renderName){
+            _render=renderName;
+            return this;
+        },
+        get:function(){
+            return _render;
+        },
     };
 
-    this.getRender=function(){
-        return _render;
+    this.template={
+        set:function(templateName){
+            _template=templateName;
+            return this;
+        },
+        get:function(){
+            return _template;
+        },
     };
 
-    this.setView=function(viewName){
-        _view=viewName;
-        return this;
+    this.view={
+        set:function(viewName){
+            _view=viewName;
+            return this;
+        },
+        get:function(){
+            return _view;
+        },
     };
+
+    this.rendering={
+
+        loadView:function(viewName){
+
+            if(!viewName){
+                viewName=cont.view.get();
+            }
+
+            if(!viewName){
+                viewName=cont.route.action;
+            }
     
-    this.getView=function(){
-        return _view;
+            var viewPath=cont.project.path+"/render/View/"+text.ucfirst(cont.route.controller)+"/"+viewName+".html";
+
+            if(!fs.existsSync(viewPath)){
+                return;
+            }
+            
+            var string = fs.readFileSync(viewPath).toString();
+
+            return string;
+        },
+
+        loadTemplate:function(templateName){
+
+            if(!templateName){
+                templateName=cont.template.get();
+            }
+
+            var templatePath=cont.project.path+"/render/Template/"+templateName+".html";
+
+            if(!fs.existsSync(templatePath)){
+                return;
+            }
+
+            var string = fs.readFileSync(templatePath).toString();
+
+            return string;
+
+        },
+
+        loadErement:function(elementName){
+
+
+        },
     };
-    
+
 };
 module.exports=requestObject;
