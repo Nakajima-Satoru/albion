@@ -1,5 +1,6 @@
 const fs = require('fs');
-const generator = require("alvion/core/generator.js");
+const generator = require("./generator.js");
+const requestObject = require("./ro.js");
 
 module.exports={
 
@@ -79,6 +80,7 @@ module.exports={
         }
 
         console.log("# SERVER LISTEN START PORT="+config.port);
+        console.log("....");
 
         http.createServer({},function(req,res){
 
@@ -104,21 +106,3 @@ module.exports={
     },
 
 }
-
-var requestObject=function(params){
-
-    this._str="";
-
-    this.request=params.req;
-    this.response=params.res;
-    this.project=params.project;
-
-    this.echo=function(string){
-        this._str+=string;
-    };
-
-    this.exit=function(){
-        this.response.end(this._str);
-    };
-
-};

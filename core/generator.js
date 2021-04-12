@@ -1,6 +1,7 @@
 const fs = require("fs");
 const routing = require("./routing.js");
 const sync = require("./sync.js");
+const text = require("./text.js");
 
 module.exports={
     
@@ -9,21 +10,19 @@ module.exports={
         var getRoute = routing.get(ro.request, ro.project.config.routing);
 
         if(!getRoute){
-            throw new Error("PAGE NOT FOUND.");
+            ro.status(404);
+            throw new Error("Access Page not found.");
         }
 
         ro.route=getRoute;
 
-        var controllerFullName=getRoute.controller.slice( 0, 1 ).toUpperCase() + ro.route.controller.slice( 1 )+"Controller";
+        var controllerFullName=text.ucfirst(ro.route.controller)+"Controller";
 
         var controllerPath=ro.project.path+"/app/Controller/"+controllerFullName+".js";
 
         if(!fs.existsSync(controllerPath)){
-            console.log("ERR: \""+controllerFullName+"\" file not Found.");
-            console.log("PATH: "+controllerPath);
-            ro.response.writehead(500);
-            ro.response.end("ERROR"); 
-            return;
+            ro.status(500);
+            throw new Error("\""+controllerFullName+"\" file not Found.");
         }
 
         var _c = require(controllerPath);
@@ -31,10 +30,8 @@ module.exports={
         var cont=new _c(ro);
 
         if(!cont[ro.route.action]){
-            console.log("ERR: The \""+ro.route.action+"\" method of \""+controllerFullName+"\" is not specified.");
-        //  ro.response.writehead(500);
-            ro.response.end("ERROR"); 
-            return;
+            ro.status(500);
+            throw new Error("The \""+ro.route.action+"\" method of \""+controllerFullName+"\" is not specified.");
         }
 
         cont.wait=function(){
@@ -89,15 +86,22 @@ module.exports={
                     next();
                 }
             },
+            function(next){
+
+                // rendering
+                cont._rendering();
+                next();
+
+            },
+            function(next){
+                ro.exit();
+            },
        ]);
 
     },
 
     error:function(ro,error){
-        ro.response.writeHead(404,{
-            "Content-Type":"text/html",
-        });
-        ro.response.end("ERR: "+error.message+"\n"+error.name);
+        ro.exit("<pre>"+error.stack+"</pre>");
     },
 
     
