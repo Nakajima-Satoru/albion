@@ -52,7 +52,7 @@ module.exports={
             var requestObj=new requestObject({
                 project:{
                     name:name,
-                    path:basePath,
+                    path:basePath+"/"+name,
                     config:config,
                 },
                 req:req,
@@ -80,14 +80,12 @@ module.exports={
             var requestObj=new requestObject({
                 project:{
                     name:name,
-                    path:basePath,
+                    path:basePath+"/"+name,
                     config:config,
                 },
                 req:req,
                 res:res,
             });
-
-            console.log(requestObj);
 
             generator(requestObj);
 
