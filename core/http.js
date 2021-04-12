@@ -59,7 +59,12 @@ module.exports={
                 res:res,
             });
 
-            generator(requestObj);
+            try{
+                generator.go(requestObj);
+            }catch(err){
+                console.error(err);
+                generator.error(requestObj,err);
+            }
 
         }).listen(443);
     
@@ -87,7 +92,12 @@ module.exports={
                 res:res,
             });
 
-            generator(requestObj);
+            try{
+                generator.go(requestObj);
+            }catch(err){
+                console.error(err);
+                generator.error(requestObj,err);
+            }
 
         }).listen(config.port);
 
