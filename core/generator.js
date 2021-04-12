@@ -52,6 +52,7 @@ module.exports={
             },
             function(next){
 
+                // call handlebefore
                 if(!cont.handleBefore){
                     next();
                     return;
@@ -76,6 +77,17 @@ module.exports={
                 }
             },
             function(next){
+
+                // call handleAfter
+                if(!cont.handleAfter){
+                    next();
+                    return;
+                }
+
+                cont.handleAfter();
+                if(!cont._waited){
+                    next();
+                }
             },
        ]);
 

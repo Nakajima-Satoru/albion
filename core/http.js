@@ -107,8 +107,18 @@ module.exports={
 
 var requestObject=function(params){
 
+    this._str="";
+
     this.request=params.req;
     this.response=params.res;
     this.project=params.project;
+
+    this.echo=function(string){
+        this._str+=string;
+    };
+
+    this.exit=function(){
+        this.response.end(this._str);
+    };
 
 };
