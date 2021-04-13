@@ -8,8 +8,6 @@ module.exports={
     
     go:function(ro){
 
-        console.log(ro.project.config);
-
         var getRoute = routing.get(ro.request, ro.project.config.routing);
 
         if(!getRoute){
@@ -129,19 +127,14 @@ module.exports={
         var content=fs.readFileSync(_path,"binary");
 
         var mimeType="text/plain";
-        if(ro.project.config.mimeType[ext]){
-            mimeType=ro.project.config.mimeType[ext];
+        if(ro.project.config.assetsMimeType[ext]){
+            mimeType=ro.project.config.assetsMimeType[ext];
         }
 
         ro.header({
             "Content-Type":mimeType+" ;charset=utf-8",
         });
-        /*
-        ro.response.writeHead(200,{
-            "Content-Type":mimeType+" ;charset=utf-8",
-        });
-*/
-        ro.response.end(content,"binary");
+        ro.exit(content,"binary");
     },
 
     error:function(ro,error){

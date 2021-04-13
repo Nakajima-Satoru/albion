@@ -26,7 +26,7 @@ var requestObject=function(params){
         var colum=Object.keys(this.project.config.responseHeader);
         for(var n=0;n<colum.length;n++){
             var field=colum[n];
-            var value=_header=this.project.config.responseHeader[field];
+            var value=this.project.config.responseHeader[field];
             _header[field]=value;
         }
     }
