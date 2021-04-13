@@ -180,7 +180,7 @@ var requestObject=function(params){
 
     this.rendering={
 
-        loadView:function(viewName){
+        loadView:function(viewName,onErrorHandle){
 
             if(!viewName){
                 viewName=cont.view.get();
@@ -193,15 +193,25 @@ var requestObject=function(params){
             var viewPath=cont.project.path+"/render/View/"+text.ucfirst(cont.route.controller)+"/"+viewName+".html";
 
             if(!fs.existsSync(viewPath)){
-                return;
+               // if(onErrorHandle){
+                    throw new Error("Unable to see View file \""+viewPath+"\".");
+                //}
+                //else{
+                 //   return;
+                //}
             }
             
             var string = fs.readFileSync(viewPath).toString();
 
+            if(cont.project.config.templateEnging=="ejs"){
+                var ejs=require("ejs");
+                string = ejs.render(string, cont.getData());                
+            }
+
             return string;
         },
 
-        loadTemplate:function(templateName){
+        loadTemplate:function(templateName, onErrorHandle){
 
             if(!templateName){
                 templateName=cont.template.get();
@@ -210,11 +220,25 @@ var requestObject=function(params){
             var templatePath=cont.project.path+"/render/Template/"+templateName+".html";
 
             if(!fs.existsSync(templatePath)){
-                return;
+                if(onErrorHandle){
+                    throw new Error("Unable to see Template file \""+templatePath+"\".");
+                }
+                else{
+                    return;
+                }
             }
 
             var string = fs.readFileSync(templatePath).toString();
 
+            if(cont.project.config.templateEnging=="ejs"){
+                var ejs=require("ejs");
+                try{
+                    string = ejs.render(string, cont.getData());                
+                }catch(error){
+                    throw new Error(error.message);
+                }
+            }
+    
             return string;
 
         },

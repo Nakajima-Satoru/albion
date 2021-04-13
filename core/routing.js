@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports={
 
-    get:function(request,routeConfig){
+    get:function(request,routeConfigs){
 
         var url=request.url;
 
@@ -20,7 +20,7 @@ module.exports={
         }
         url=url2[0];
 
-        var buffer = this.checkRoute(url,routeConfig.release);
+        var buffer = this.checkRoute(url,routeConfigs);
 
         if(!buffer[0]){
             return;
@@ -35,6 +35,57 @@ module.exports={
         getRoute.hash=hash;
         getRoute.query=this.convertQuery(query);    
 
+        return getRoute;
+    },
+
+    getAssets:function(request,assetsRoutings){
+
+        var url=request.url;
+
+        var url1=url.split("#");
+        var hash=null;
+        if(url1[1]){
+            hash=url1[1];
+        }
+        url=url1[0];
+
+        var url2=url.split("?");
+        var query=null;
+        if(url2[1]){
+            query=url2[1];
+        }
+        url=url2[0];
+
+        var urls=url.split("/");
+        urls.shift();
+
+        var buffer = this.checkRoute("/"+urls[0],assetsRoutings);
+
+        if(!buffer[0]){
+            return;
+        }
+
+        var assetsPath=buffer[0];
+
+        return assetsPath+"/"+path.basename(url);
+    },
+
+    getError:function(errorName,errorRoutings){
+
+        var buffer=null;
+        if(errorRoutings[errorName]){
+            buffer=errorRoutings[errorName];
+        }
+
+        if(!buffer){
+            return;
+        }
+
+        var buff=buffer.split("@");
+        var getRoute={
+            controller:buff[0],
+            action:buff[1],
+        };    
         return getRoute;
     },
 
@@ -110,8 +161,14 @@ module.exports={
                 }
             }
 
+            if(chk1[field].length!=urls.length){
+                juge=false;                                
+            }
+
             if(juge){
                 getRoute=routeConfig[field];
+
+
                 if(aregments[field].length){
                     aregment=aregments[field];
                 }
@@ -143,35 +200,5 @@ module.exports={
     },
 
 
-    getAssets:function(request,routeConfig){
 
-        var url=request.url;
-
-        var url1=url.split("#");
-        var hash=null;
-        if(url1[1]){
-            hash=url1[1];
-        }
-        url=url1[0];
-
-        var url2=url.split("?");
-        var query=null;
-        if(url2[1]){
-            query=url2[1];
-        }
-        url=url2[0];
-
-        var urls=url.split("/");
-        urls.shift();
-
-        var buffer = this.checkRoute("/"+urls[0],routeConfig.assets);
-
-        if(!buffer[0]){
-            return;
-        }
-
-        var assetsPath=buffer[0];
-
-        return assetsPath+"/"+path.basename(url);
-    },
 };
