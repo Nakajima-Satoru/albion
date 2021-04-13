@@ -94,6 +94,10 @@ module.exports={
         var urls=url.split("/");
         urls.shift();
 
+        if(!urls[urls.length-1] && urls.length>=2){
+            urls.pop();
+        }
+
         var chk1={};
         var aregments={};
 
