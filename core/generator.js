@@ -131,8 +131,14 @@ module.exports={
             mimeType=ro.project.config.assetsMimeType[ext];
         }
 
+        var cacheControl="";
+        if(ro.project.config.assetsControlCache){
+            cacheControl=ro.project.config.assetsControlCache;
+        }
+
         ro.header({
             "Content-Type":mimeType+" ;charset=utf-8",
+            "Cache-Control":cacheControl,
         });
         ro.exit(content,"binary");
     },
