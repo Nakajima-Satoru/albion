@@ -15,6 +15,10 @@ module.exports={
 
         var config=require(basePath+"/"+name+"/config/app.js");
 
+        if(!config.templateEnging){
+            config.templateEnging="ejs";
+        }
+
         if(config.https){
             this.listenhttps(basePath,name,config);
         }
@@ -96,6 +100,7 @@ module.exports={
 
             try{
                 generator.go(requestObj);
+                return;
             }catch(err){
                 console.error(err);
                 generator.error(requestObj,err);

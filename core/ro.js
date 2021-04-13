@@ -18,9 +18,17 @@ var requestObject=function(params){
     var _render=null;
     var _template=null;
     var _view=null;
+    var _sendData={
+        ro:this,
+    };
 
     if(this.project.config.responseHeader){
-        _header=this.project.config.responseHeader;
+        var colum=Object.keys(this.project.config.responseHeader);
+        for(var n=0;n<colum.length;n++){
+            var field=colum[n];
+            var value=_header=this.project.config.responseHeader[field];
+            _header[field]=value;
+        }
     }
 
     this.status=function(type){
@@ -56,14 +64,21 @@ var requestObject=function(params){
         return this;
     };
 
-    this.exit=function(string){
+    this.exit=function(string,option){
         if(!_exited){
             _exited=true;
             if(string){
                 this._str+=string;
             }
-            this.response.writeHead(_status,_header);
-            this.response.end(this._str);    
+            var setHeader={};
+            var colum=Object.keys(_header);
+            for(var n=0;n<colum.length;n++){
+                var field=colum[n];
+                var value=_header[field];
+                setHeader[field]=value;
+            }
+            this.response.writeHead(_status,setHeader);
+            this.response.end(this._str,option);    
         }
     };
 
@@ -101,6 +116,27 @@ var requestObject=function(params){
 
         return string;
     };
+
+    this.setData=function(field,value){
+        _sendData[field]=value;
+        return this;
+    }
+
+    this.setDatas=function(values){
+
+        var colum=Object.keys(values);
+        for(var n=0;n<colum.length;n++){
+            var field=colum[n];
+            var value=values[field];
+
+            _sendData[field]=value;
+        }
+        return this;
+    };
+
+    this.getData=function(){
+        return _sendData;
+    }
 
     this.autoRender={
         set:function(status){

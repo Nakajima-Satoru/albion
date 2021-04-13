@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const routing = require("./routing.js");
 const sync = require("./sync.js");
 const text = require("./text.js");
@@ -7,11 +8,21 @@ module.exports={
     
     go:function(ro){
 
+        console.log(ro.project.config);
+
         var getRoute = routing.get(ro.request, ro.project.config.routing);
 
         if(!getRoute){
-            ro.status(404);
-            throw new Error("Access Page not found.");
+            var getRouteAsset = routing.getAssets(ro.request,ro.project.config.routing);
+
+            if(getRouteAsset){
+                this.goAssets(ro,getRouteAsset);
+                return;
+            }
+            else{
+                ro.status(404);
+                throw new Error("Access Page not found.");
+            }    
         }
 
         ro.route=getRoute;
@@ -98,6 +109,39 @@ module.exports={
             },
        ]);
 
+    },
+
+    goAssets:function(ro,assetsPath){
+
+        var _path=ro.project.path+"/"+assetsPath;
+
+        if(!fs.existsSync(_path)){
+            throw new Error("PAGE NOT FOUND2");
+        }
+
+        if(fs.statSync(_path).isDirectory()){
+            ro.status(404);
+            throw new Error("PAGE NOT FOUND3");
+        }
+
+        var ext=path.extname(_path).split(".").join("");
+
+        var content=fs.readFileSync(_path,"binary");
+
+        var mimeType="text/plain";
+        if(ro.project.config.mimeType[ext]){
+            mimeType=ro.project.config.mimeType[ext];
+        }
+
+        ro.header({
+            "Content-Type":mimeType+" ;charset=utf-8",
+        });
+        /*
+        ro.response.writeHead(200,{
+            "Content-Type":mimeType+" ;charset=utf-8",
+        });
+*/
+        ro.response.end(content,"binary");
     },
 
     error:function(ro,error){

@@ -12,6 +12,12 @@ module.exports=class Render extends Core{
             var html=this.ro.rendering.loadView();
         }
 
+        if(this.ro.project.config.templateEnging=="ejs"){
+            var ejs=require("ejs");
+
+            html = ejs.render(html, this.ro.getData());
+        }
+
         this.ro.echo(html);
     }
 
