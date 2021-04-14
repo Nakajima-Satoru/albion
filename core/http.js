@@ -97,7 +97,7 @@ module.exports={
                 req:req,
                 res:res,
             });
-
+            
             try{
                 generator.go(requestObj);
                 return;

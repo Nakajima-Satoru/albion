@@ -21,6 +21,9 @@ var requestObject=function(params){
     var _sendData={
         ro:this,
     };
+    var _query={};
+    var _post={};
+    var _put={};
 
     if(this.project.config.responseHeader){
         var colum=Object.keys(this.project.config.responseHeader);
@@ -246,6 +249,99 @@ var requestObject=function(params){
         loadErement:function(elementName){
 
 
+        },
+    };
+
+    this.query={
+        set:function(data){
+            var colum=Object.keys(data);
+            for(var n=0;n<colum.length;n++){
+                var field=colum[n];
+                var value=data[field];
+                _query[field]=value;
+            }
+            return this;
+        },
+        get:function(name){
+            if(name){
+                if(_query[name]){
+                    return _query[name];
+                }
+                else{
+                    return null;
+                }
+            }
+            else{
+                return _query;
+            }
+        },
+        delete:function(name){
+            if(name){
+                delete _query[name];
+            }
+            else{
+                _query={};
+            }
+        },
+    };
+
+    this.post={
+        set:function(data){
+            var colum=Object.keys(data);
+            for(var n=0;n<colum.length;n++){
+                var field=colum[n];
+                var value=data[field];
+                _post[field]=value;
+            }
+            return this;
+        },
+        get:function(name){
+            if(name){
+                if(_post[name]){
+                    return _post[name];
+                }
+            }
+            else{
+                return _post;
+            }
+        },
+        delete:function(name){
+            if(name){
+                delete _post[name];
+            }
+            else{
+                _post={};
+            }
+        },
+    };
+
+    this.put={
+        set:function(data){
+            var colum=Object.keys(data);
+            for(var n=0;n<colum.length;n++){
+                var field=colum[n];
+                var value=data[field];
+                _put[field]=value;
+            }
+            return this;
+        },
+        get:function(name){
+            if(name){
+                if(_put[name]){
+                    return _put[name];
+                }
+            }
+            else{
+                return _put;
+            }
+        },
+        delete:function(name){
+            if(name){
+                delete _put[name];
+            }
+            else{
+                _put={};
+            }
         },
     };
 
