@@ -22,7 +22,7 @@
     "url": "https://github.com/Nakajima-Satoru/alvion/issues"
   },
   "homepage": "https://github.com/Nakajima-Satoru/alvion#readme",
-  "devDependencies": {
+  "dependencies": {
     "albion_command": "git+https://github.com/Nakajima-Satoru/albion_command.git",
     "albion_validator": "git+https://github.com/Nakajima-Satoru/albion_validator.git",
     "albion_orm": "git+https://github.com/Nakajima-Satoru/albion_orm.git",
