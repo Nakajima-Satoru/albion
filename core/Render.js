@@ -5,7 +5,7 @@ module.exports=class Render extends Core{
 
     rendering(){
 
-        if(this.ro.template.get()){
+        if(this.ro.template()){
             var html=this.ro.rendering.loadTemplate(null,true);
         }
         else{

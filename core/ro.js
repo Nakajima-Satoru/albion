@@ -141,44 +141,44 @@ var requestObject=function(params){
         return _sendData;
     }
 
-    this.autoRender={
-        set:function(status){
+    this.autoRender=function(status){
+        if(status){
             _autoRender=status;
             return this;
-        },
-        get:function(){
+        }
+        else{
             return _autoRender;
-        },
+        }
     };
 
-    this.render={
-        set:function(renderName){
+    this.render=function(renderName){
+        if(renderName){
             _render=renderName;
             return this;
-        },
-        get:function(){
+        }
+        else{
             return _render;
-        },
+        }
     };
 
-    this.template={
-        set:function(templateName){
+    this.template=function(templateName){
+        if(templateName){
             _template=templateName;
             return this;
-        },
-        get:function(){
+        }
+        else{
             return _template;
-        },
+        }
     };
 
-    this.view={
-        set:function(viewName){
+    this.view=function(viewName){
+        if(viewName){
             _view=viewName;
             return this;
-        },
-        get:function(){
+        }
+        else{
             return _view;
-        },
+        }
     };
 
     this.rendering={
@@ -186,7 +186,7 @@ var requestObject=function(params){
         loadView:function(viewName,onErrorHandle){
 
             if(!viewName){
-                viewName=cont.view.get();
+                viewName=cont.view();
             }
 
             if(!viewName){
@@ -196,12 +196,7 @@ var requestObject=function(params){
             var viewPath=cont.project.path+"/render/View/"+text.ucfirst(cont.route.controller)+"/"+viewName+".html";
 
             if(!fs.existsSync(viewPath)){
-               // if(onErrorHandle){
-                    throw new Error("Unable to see View file \""+viewPath+"\".");
-                //}
-                //else{
-                 //   return;
-                //}
+                throw new Error("Unable to see View file \""+viewPath+"\".");
             }
             
             var string = fs.readFileSync(viewPath).toString();
@@ -217,14 +212,33 @@ var requestObject=function(params){
         loadTemplate:function(templateName, onErrorHandle){
 
             if(!templateName){
-                templateName=cont.template.get();
+                templateName=cont.template();
             }
 
             var templatePath=cont.project.path+"/render/Template/"+templateName+".html";
 
             if(!fs.existsSync(templatePath)){
+                throw new Error("Unable to see Template file \""+templatePath+"\".");
+            }
+
+            var string = fs.readFileSync(templatePath).toString();
+
+            if(cont.project.config.templateEnging=="ejs"){
+                var ejs=require("ejs");
+                string = ejs.render(string, cont.getData());
+            }
+    
+            return string;
+
+        },
+
+        loadErement:function(elementName){
+
+            var ElementPath=cont.project.path+"/render/Element/"+elementName+".html";
+
+            if(!fs.existsSync(ElementPath)){
                 if(onErrorHandle){
-                    throw new Error("Unable to see Template file \""+templatePath+"\".");
+                    throw new Error("Unable to see Element file \""+ElementPath+"\".");
                 }
                 else{
                     return;
@@ -235,19 +249,10 @@ var requestObject=function(params){
 
             if(cont.project.config.templateEnging=="ejs"){
                 var ejs=require("ejs");
-                try{
-                    string = ejs.render(string, cont.getData());                
-                }catch(error){
-                    throw new Error(error.message);
-                }
+                string = ejs.render(string, cont.getData());
             }
     
             return string;
-
-        },
-
-        loadErement:function(elementName){
-
 
         },
     };
@@ -272,7 +277,12 @@ var requestObject=function(params){
                 }
             }
             else{
-                return _query;
+                if(Object.keys(_query).length){
+                    return _query;
+                }
+                else{
+                    return null;
+                }
             }
         },
         delete:function(name){
@@ -302,7 +312,12 @@ var requestObject=function(params){
                 }
             }
             else{
-                return _post;
+                if(Object.keys(_post).length){
+                    return _post;
+                }
+                else{
+                    return null;
+                }
             }
         },
         delete:function(name){
@@ -332,7 +347,12 @@ var requestObject=function(params){
                 }
             }
             else{
-                return _put;
+                if(Object.keys(_put).length){
+                    return _put;
+                }
+                else{
+                    return null;
+                }
             }
         },
         delete:function(name){

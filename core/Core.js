@@ -20,7 +20,7 @@ module.exports=class Core{
             var length=ro.project.config.useClass.length;
             for(var n=0;n<length;n++){
                 var classType=ro.project.config.useClass[n];
-                this.Model = new expandClass(ro, text.ucfirst(classType));
+                this[classType] = new expandClass(ro, text.ucfirst(classType));
             }
 
         }

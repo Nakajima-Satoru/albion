@@ -5,4 +5,8 @@ module.exports={
     text:require("./core/text.js"),
     Controller:require("./core/Controller.js"),
     Model:require("./core/Model.js"),
+    Table:require("./core/Table.js"),
+    TableView:require("./core/TableView.js"),
+    Validator:require("./core/Validator.js"),
+    Pack:require("./core/Pack.js"),
 };

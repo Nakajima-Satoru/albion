@@ -12,11 +12,11 @@ module.exports=class Controller extends core{
 
     _rendering(){
 
-        if(!this.ro.autoRender.get()){
+        if(!this.ro.autoRender()){
             return;
         }
 
-        var renderClassName=this.ro.render.get();
+        var renderClassName=this.ro.render();
 
         if(!renderClassName){
             var Render=require("./Render.js");
