@@ -6,7 +6,7 @@ module.exports={
 
     listen:function(basePath,name){
 
-        var configPath=name+"/config/app.js";
+        var configPath=basePath+"/"+name+"/config/app.js";
 
         if(!fs.existsSync(configPath)){
             console.log("ERR: The configuration file was not found.\n\Path: \""+configPath+"\"")
