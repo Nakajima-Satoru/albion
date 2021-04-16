@@ -83,15 +83,24 @@ module.exports={
         var urls=url.split("/");
         urls.shift();
 
-        var buffer = this.checkRoute("/"+urls[0],assetsRoutings);
+        var colum=Object.keys(assetsRoutings);
+        var assetsPath=null;
+        var ignorePath=null;
+        for(var n=0;n<colum.length;n++){
+            var field=colum[n];
+            var value=assetsRoutings[field];
 
-        if(!buffer[0]){
+            if(url.indexOf(field)==0){
+                ignorePath=field;
+                assetsPath=value;
+            }
+        }
+
+        if(!assetsPath){
             return;
         }
 
-        var assetsPath=buffer[0];
-
-        return assetsPath+"/"+path.basename(url);
+        return assetsPath+url.replace(ignorePath,"");
     },
 
     /**
@@ -101,6 +110,10 @@ module.exports={
      * @returns 
      */
     getError:function(errorName,errorRoutings){
+
+        if(!errorRoutings){
+            return [];
+        }
 
         var buffer=null;
         if(errorRoutings[errorName]){
@@ -126,6 +139,10 @@ module.exports={
      * @returns 
      */
     checkRoute:function(url,routeConfig){
+
+        if(!routeConfig){
+            return [];
+        }
 
         var urls=url.split("/");
         urls.shift();

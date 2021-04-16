@@ -87,12 +87,33 @@ module.exports={
         var _path=ro.project.path+"/"+assetsPath;
 
         if(!fs.existsSync(_path)){
+            ro.status(404);
             throw new Error("PAGE NOT FOUND2");
         }
 
         if(fs.statSync(_path).isDirectory()){
-            ro.status(404);
-            throw new Error("PAGE NOT FOUND3");
+
+            var juge=false;
+
+            if(ro.project.config.assetsIndexFiles){
+
+                var indexFiles = ro.project.config.assetsIndexFiles;
+
+                for(var n=0;n<indexFiles.length;n++){
+                    var fileName=indexFiles[n];
+
+                    if(fs.statSync(_path+fileName)){
+                        juge=true;
+                        _path+=fileName;
+                        break;
+                    }
+                }
+            }
+
+            if(!juge){
+                ro.status(404);
+                throw new Error("PAGE NOT FOUND3");    
+            }
         }
 
         var ext=path.extname(_path).split(".").join("");
