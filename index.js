@@ -9,4 +9,5 @@ module.exports={
     TableView:require("./core/TableView.js"),
     Validator:require("./core/Validator.js"),
     Pack:require("./core/Pack.js"),
+    Ui:require("./core/Ui.js"),
 };

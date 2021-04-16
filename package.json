@@ -26,6 +26,8 @@
     "albion_command": "git+https://github.com/Nakajima-Satoru/albion_command.git",
     "albion_validator": "git+https://github.com/Nakajima-Satoru/albion_validator.git",
     "albion_orm": "git+https://github.com/Nakajima-Satoru/albion_orm.git",
-    "ejs": "~3.1.6"
+    "ejs": "~3.1.6",
+    "mysql":"=2.18.1",
+    "sqlite3":"=5.0.2"
   }
 }
