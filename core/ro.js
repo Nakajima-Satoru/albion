@@ -69,6 +69,7 @@ var requestObject=function(params){
 
     this.exit=function(string,option){
         if(!_exited){
+            _autoRender=false;
             _exited=true;
             if(string){
                 this._str+=string;
@@ -87,7 +88,7 @@ var requestObject=function(params){
 
     this.debug=function(objects){
 
-        var str=JSON.stringify(objects,null,"\t");
+        var str=JSON.stringify(objects,null,"   ");
         this.echo("<pre>"+str+"</pre>");
 
         return this;

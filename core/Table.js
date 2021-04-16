@@ -13,6 +13,15 @@ module.exports=class Table extends Core{
             this._orm.connection(defaultConectData);
         }
 
+        var defaultTableName = this.constructor.name.replace("Table","");
+        defaultTableName=defaultTableName.toLowerCase();
+
+        var prefix="";
+        if(ro.project.config.database.default.prefix){
+            prefix=ro.project.config.database.default.prefix;
+        }
+        this.setTable(prefix+defaultTableName);
+
     }
 
     connection(params){
