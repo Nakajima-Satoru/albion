@@ -1,3 +1,15 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * ro.js (requestObject)
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 var text = require("./text.js");
 var fs = require("fs");
 
@@ -34,6 +46,11 @@ var requestObject=function(params){
         }
     }
 
+    /**
+     * status
+     * @param {*} type 
+     * @returns 
+     */
     this.status=function(type){
         if(type){
             _status=type;
@@ -44,6 +61,11 @@ var requestObject=function(params){
         }
     };
 
+    /**
+     * header
+     * @param {*} option 
+     * @returns 
+     */
     this.header=function(option){
         var colum=Object.keys(option);
         for(var n=0;n<colum.length;n++){
@@ -60,6 +82,11 @@ var requestObject=function(params){
         return this;
     };
 
+    /**
+     * echo
+     * @param {*} string 
+     * @returns 
+     */
     this.echo=function(string){
         if(string){
             this._str+=string;
@@ -67,6 +94,11 @@ var requestObject=function(params){
         return this;
     };
 
+    /**
+     * exit
+     * @param {*} string 
+     * @param {*} option 
+     */
     this.exit=function(string,option){
         if(!_exited){
             _autoRender=false;
@@ -86,6 +118,11 @@ var requestObject=function(params){
         }
     };
 
+    /**
+     * debug
+     * @param {*} objects 
+     * @returns 
+     */
     this.debug=function(objects){
 
         var str=JSON.stringify(objects,null,"   ");
@@ -94,6 +131,11 @@ var requestObject=function(params){
         return this;
     };
 
+    /**
+     * sanitize
+     * @param {*} string 
+     * @returns 
+     */
     this.sanitize=function(string){
 
         var saList={
@@ -121,11 +163,22 @@ var requestObject=function(params){
         return string;
     };
 
+    /**
+     * setData
+     * @param {*} field 
+     * @param {*} value 
+     * @returns 
+     */
     this.setData=function(field,value){
         _sendData[field]=value;
         return this;
-    }
+    };
 
+    /**
+     * setDatas
+     * @param {*} values 
+     * @returns 
+     */
     this.setDatas=function(values){
 
         var colum=Object.keys(values);
@@ -138,10 +191,19 @@ var requestObject=function(params){
         return this;
     };
 
+    /**
+     * getData
+     * @returns 
+     */
     this.getData=function(){
         return _sendData;
-    }
+    };
 
+    /**
+     * autoRender
+     * @param {*} status 
+     * @returns 
+     */
     this.autoRender=function(status){
         if(status){
             _autoRender=status;
@@ -152,6 +214,11 @@ var requestObject=function(params){
         }
     };
 
+    /**
+     * render
+     * @param {*} renderName 
+     * @returns 
+     */
     this.render=function(renderName){
         if(renderName){
             _render=renderName;
@@ -162,6 +229,11 @@ var requestObject=function(params){
         }
     };
 
+    /**
+     * template
+     * @param {*} templateName 
+     * @returns 
+     */
     this.template=function(templateName){
         if(templateName){
             _template=templateName;
@@ -172,6 +244,11 @@ var requestObject=function(params){
         }
     };
 
+    /**
+     * view
+     * @param {*} viewName 
+     * @returns 
+     */
     this.view=function(viewName){
         if(viewName){
             _view=viewName;
@@ -182,8 +259,17 @@ var requestObject=function(params){
         }
     };
 
+    /**
+     * rendering
+     */
     this.rendering={
 
+        /**
+         * loadView
+         * @param {*} viewName 
+         * @param {*} onErrorHandle 
+         * @returns 
+         */
         loadView:function(viewName,onErrorHandle){
 
             if(!viewName){
@@ -210,6 +296,12 @@ var requestObject=function(params){
             return string;
         },
 
+        /**
+         * loadTemplate
+         * @param {*} templateName 
+         * @param {*} onErrorHandle 
+         * @returns 
+         */
         loadTemplate:function(templateName, onErrorHandle){
 
             if(!templateName){
@@ -233,6 +325,11 @@ var requestObject=function(params){
 
         },
 
+        /**
+         * loadErement
+         * @param {*} elementName 
+         * @returns 
+         */
         loadErement:function(elementName){
 
             var ElementPath=cont.project.path+"/render/Element/"+elementName+".html";
@@ -258,7 +355,16 @@ var requestObject=function(params){
         },
     };
 
+    /**
+     * query
+     */
     this.query={
+
+        /**
+         * set
+         * @param {*} data 
+         * @returns 
+         */
         set:function(data){
             var colum=Object.keys(data);
             for(var n=0;n<colum.length;n++){
@@ -268,6 +374,12 @@ var requestObject=function(params){
             }
             return this;
         },
+
+        /**
+         * get
+         * @param {} name 
+         * @returns 
+         */
         get:function(name){
             if(name){
                 if(_query[name]){
@@ -286,6 +398,11 @@ var requestObject=function(params){
                 }
             }
         },
+
+        /**
+         * delete
+         * @param {*} name 
+         */
         delete:function(name){
             if(name){
                 delete _query[name];
@@ -296,7 +413,16 @@ var requestObject=function(params){
         },
     };
 
+    /**
+     * post
+     */
     this.post={
+
+        /**
+         * set
+         * @param {*} data 
+         * @returns 
+         */
         set:function(data){
             var colum=Object.keys(data);
             for(var n=0;n<colum.length;n++){
@@ -306,6 +432,12 @@ var requestObject=function(params){
             }
             return this;
         },
+
+        /**
+         * get
+         * @param {*} name 
+         * @returns 
+         */
         get:function(name){
             if(name){
                 if(_post[name]){
@@ -321,6 +453,11 @@ var requestObject=function(params){
                 }
             }
         },
+
+        /**
+         * delete
+         * @param {*} name 
+         */
         delete:function(name){
             if(name){
                 delete _post[name];
@@ -331,7 +468,16 @@ var requestObject=function(params){
         },
     };
 
+    /**
+     * put
+     */
     this.put={
+
+        /**
+         * set
+         * @param {*} data 
+         * @returns 
+         */
         set:function(data){
             var colum=Object.keys(data);
             for(var n=0;n<colum.length;n++){
@@ -341,6 +487,12 @@ var requestObject=function(params){
             }
             return this;
         },
+
+        /**
+         * get
+         * @param {*} name 
+         * @returns 
+         */
         get:function(name){
             if(name){
                 if(_put[name]){
@@ -356,6 +508,11 @@ var requestObject=function(params){
                 }
             }
         },
+
+        /**
+         * delete
+         * @param {*} name 
+         */
         delete:function(name){
             if(name){
                 delete _put[name];

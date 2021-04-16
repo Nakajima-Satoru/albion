@@ -1,9 +1,27 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * http.js
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 const fs = require('fs');
 const generator = require("./generator.js");
 const requestObject = require("./ro.js");
 
 module.exports={
 
+    /**
+     * listen
+     * @param {*} basePath 
+     * @param {*} name 
+     * @returns 
+     */
     listen:function(basePath,name){
 
         var configPath=basePath+"/"+name+"/config/app.js";
@@ -27,6 +45,14 @@ module.exports={
         }
 
     },
+
+    /**
+     * listenhttps
+     * @param {*} basePath 
+     * @param {*} name 
+     * @param {*} config 
+     * @returns 
+     */
     listenhttps:function(basePath,name,config){
           
         var https=require("https");
@@ -75,6 +101,12 @@ module.exports={
     
     },
 
+    /**
+     * listenhttp
+     * @param {*} basePath 
+     * @param {*} name 
+     * @param {*} config 
+     */
     listenhttp:function(basePath,name,config){
 
         var http=require("http");
@@ -110,4 +142,4 @@ module.exports={
 
     },
 
-}
+};

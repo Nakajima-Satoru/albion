@@ -1,3 +1,15 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * index.js
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 module.exports={
     fs:require("./core/fs.js"),
     sync:require("./core/sync.js"),

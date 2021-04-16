@@ -1,5 +1,22 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * fs.js
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 var fs=require("fs");
 
+/**
+ * fs.deepSearch
+ * @param {*} path 
+ * @returns 
+ */
 fs.deepSearch=function(path){
 
     var getDirList=fs.readdirSync(path);
@@ -36,5 +53,4 @@ fs.deepSearch=function(path){
     return list;
 
 };
-
 module.exports=fs;

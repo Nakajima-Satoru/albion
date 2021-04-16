@@ -1,15 +1,35 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * Controller.js
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 const fs = require("fs");
 const core = require("./core.js");
 const text = require("./text.js");
 
 module.exports=class Controller extends core{
 
+    /**
+     * constructor
+     * @param {*} ro 
+     */
     constructor(ro){
         super(ro);
         this.autoRender=false;
         this.viewName=ro.route.actoun;
     }
 
+    /**
+     * _rendering
+     * @returns 
+     */
     _rendering(){
 
         if(!this.ro.autoRender()){

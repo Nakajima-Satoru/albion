@@ -1,3 +1,15 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * generator.js
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 const fs = require("fs");
 const url = require('url');
 const path = require("path");
@@ -7,6 +19,11 @@ const text = require("./text.js");
 
 module.exports={
     
+    /**
+     * go
+     * @param {*} ro 
+     * @returns 
+     */
     go:function(ro){
 
         var getRoute = routing.get(ro.request, ro.project.config.routing.release);
@@ -60,6 +77,11 @@ module.exports={
 
     },
 
+    /**
+     * goAssets
+     * @param {*} ro 
+     * @param {*} assetsPath 
+     */
     goAssets:function(ro,assetsPath){
 
         var _path=ro.project.path+"/"+assetsPath;
@@ -94,6 +116,11 @@ module.exports={
         ro.exit(content,"binary");
     },
 
+    /**
+     * error
+     * @param {*} ro 
+     * @param {*} error 
+     */
     error:function(ro,error){
 
         var errorName=error.name;
@@ -122,6 +149,11 @@ module.exports={
 
     },
 
+    /**
+     * setController
+     * @param {*} ro 
+     * @param {*} errorexception 
+     */
     setController:function(ro,errorexception){
 
         var controllerFullName=text.ucfirst(ro.route.controller)+"Controller";
@@ -225,6 +257,12 @@ module.exports={
 
     },
 
+    /**
+     * simpleErrorOutput
+     * @param {*} ro 
+     * @param {*} error 
+     * @param {*} error2nd 
+     */
     simpleErrorOutput:function(ro,error,error2nd){
 
         if(ro.project.config.debugMode){
@@ -240,7 +278,12 @@ module.exports={
 
     },
 
-  
+    /**
+     * convertPostData
+     * @param {*} ro 
+     * @param {*} postDataStr 
+     * @returns 
+     */
     convertPostData:function(ro,postDataStr){
 
         var contentType=ro.request.headers["content-type"];

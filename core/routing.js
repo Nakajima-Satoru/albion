@@ -1,7 +1,25 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * routing.js
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 const path = require("path");
 
 module.exports={
 
+    /**
+     * get
+     * @param {*} request 
+     * @param {*} routeConfigs 
+     * @returns 
+     */
     get:function(request,routeConfigs){
 
         var url=request.url;
@@ -38,6 +56,12 @@ module.exports={
         return getRoute;
     },
 
+    /**
+     * getAssets
+     * @param {*} request 
+     * @param {*} assetsRoutings 
+     * @returns 
+     */
     getAssets:function(request,assetsRoutings){
 
         var url=request.url;
@@ -70,6 +94,12 @@ module.exports={
         return assetsPath+"/"+path.basename(url);
     },
 
+    /**
+     * getError
+     * @param {*} errorName 
+     * @param {*} errorRoutings 
+     * @returns 
+     */
     getError:function(errorName,errorRoutings){
 
         var buffer=null;
@@ -89,6 +119,12 @@ module.exports={
         return getRoute;
     },
 
+    /**
+     * checkRoute
+     * @param {*} url 
+     * @param {*} routeConfig 
+     * @returns 
+     */
     checkRoute:function(url,routeConfig){
 
         var urls=url.split("/");
@@ -185,6 +221,11 @@ module.exports={
         return [getRoute,aregment];
     },
 
+    /**
+     * convertQuery
+     * @param {*} queryStr 
+     * @returns 
+     */
     convertQuery:function(queryStr){
 
         if(!queryStr){
@@ -202,7 +243,5 @@ module.exports={
 
         return queries;
     },
-
-
 
 };

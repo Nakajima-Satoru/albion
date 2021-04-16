@@ -1,8 +1,24 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * expandClass.js
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 const fs = require("fs");
 const text = require("./text.js");
 
 const expandClass=function(ro,classType){
 
+    /**
+     * load
+     * @param {*} classNameList 
+     */
     this.load=function(classNameList){
 
         if(typeof classNameList === "string"){
@@ -23,6 +39,12 @@ const expandClass=function(ro,classType){
 
     };
 
+    /**
+     * get
+     * @param {*} className 
+     * @param {*} option 
+     * @returns 
+     */
     this.get=function(className,option){
 
         className = text.ucfirst(className);
@@ -47,5 +69,4 @@ const expandClass=function(ro,classType){
     };
 
 };
-
 module.exports=expandClass;

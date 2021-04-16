@@ -1,8 +1,23 @@
+/**
+ * ==================================================
+ * 
+ * ALBION Ver 1.0.0
+ * 
+ * Render.js
+ * 
+ * CopyLight: Nakajima-Satoru since 0201/04/16
+ * 
+ * ==================================================
+ */
+
 var Core = require("./core.js");
 var text = require("./text.js");
 
 module.exports=class Render extends Core{
 
+    /**
+     * rendering
+     */
     rendering(){
 
         if(this.ro.template()){
@@ -11,12 +26,7 @@ module.exports=class Render extends Core{
         else{
             var html=this.ro.rendering.loadView(null,true);
         }
-/*
-        if(this.ro.project.config.templateEnging=="ejs"){
-            var ejs=require("ejs");
-            html = ejs.render(html, this.ro.getData());                
-        }
-*/
+
         this.ro.echo(html);
     }
 
