@@ -60,11 +60,43 @@ module.exports=class Table extends Core{
     }
 
     /**
+     * setSurrogateKey
+     * @param {*} field 
+     * @returns 
+     */
+    setSurrogateKey(field){
+        return this._orm.setSurrogateKey(field);
+    }
+
+    /**
+     * setTimeStamp
+     * @param {*} params 
+     */
+    setTimeStamp(params){
+        return this._orm.setTimeStamp(params);
+    }
+
+    /**
+     * getTimeStamp
+     * @returns 
+     */
+    getTimeStamp(){
+        return this._orm.getTimeStamp();
+    }
+
+    /**
      * check
      * @returns 
      */
     check(){
         return this._orm.check();
+    }
+
+    /**
+     * checkSurrogateKey
+     */
+    checkSurrogateKey(){
+        return this._orm.checkSurrogateKey();
     }
 
     /**
