@@ -181,6 +181,17 @@ module.exports=class Table extends Core{
         return this._orm.delete(params,option,callback);
     }
 
+
+    /**
+     * revert
+     * @param {*} params 
+     * @param {*} option 
+     * @param {*} callback 
+     */
+    revert(params,option,callback){
+        return this._orm.revert(params,option,callback);
+    }
+
     /**
      * migration
      * @returns 
