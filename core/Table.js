@@ -85,6 +85,23 @@ module.exports=class Table extends Core{
     }
 
     /**
+     * setLogicalDeleteKey
+     * @param {*} params 
+     * @returns 
+     */
+    setLogicalDeleteKey(params){
+        return this._orm.setLogicalDeleteKey(params);
+    }
+
+    /**
+     * getLogicalDeleteKey
+     * @returns 
+     */
+    getLogicalDeleteKey(){
+        return this._orm.getLogicalDeleteKey();
+    }
+
+    /**
      * check
      * @returns 
      */
@@ -156,11 +173,12 @@ module.exports=class Table extends Core{
     /**
      * delete
      * @param {*} params 
+     * @param {*} option 
      * @param {*} callback 
      * @returns 
      */
-    delete(params,callback){
-        return this._orm.delete(params,callback);
+    delete(params,option,callback){
+        return this._orm.delete(params,option,callback);
     }
 
     /**
@@ -177,6 +195,15 @@ module.exports=class Table extends Core{
      */
     show(){
         return this._orm.show();
+    }
+
+    /**
+     * transaction
+     * @param {*} callback 
+     * @param {*} errCallback 
+     */
+    transaction(callback,errCallback){
+        return this._orm.transaction(callback,errCallback);
     }
 
 };
