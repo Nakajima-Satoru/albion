@@ -102,6 +102,14 @@ module.exports=class Table extends Core{
     }
 
     /**
+     * getLog
+     * @returns 
+     */
+    getLog(){
+        return this._orm.getLog();
+    }
+    
+    /**
      * check
      * @returns 
      */
