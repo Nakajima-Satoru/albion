@@ -183,8 +183,13 @@ module.exports={
 
         if(config.garbageCollectionInterval){
             var gcInterval=config.garbageCollectionInterval;
-            setInterval(function(){
-                global.gc();
+            var sss= setInterval(function(){
+                try{
+                    global.gc();
+                }catch(err){
+                    console.log(err);
+                    clearInterval(sss);
+                }
             },gcInterval*1000);
         }
 
