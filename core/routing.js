@@ -57,6 +57,30 @@ module.exports={
     },
 
     /**
+     * getShell
+     * @param {*} request 
+     * @param {*} routeConfig 
+     * @returns 
+     */
+    getShell:function(url,routeConfigs){
+
+        var buffer = this.checkRoute(url,routeConfigs);
+
+        if(!buffer[0]){
+            return;
+        }
+
+        var buff=buffer[0].split("@");
+        var getRoute={
+            shell:buff[0],
+            action:buff[1],
+            aregment:buffer[1],
+        };
+
+        return getRoute;
+    },
+
+    /**
      * getAssets
      * @param {*} request 
      * @param {*} assetsRoutings 
@@ -130,6 +154,30 @@ module.exports={
             action:buff[1],
         };    
         return getRoute;
+    },
+
+    getShellError:function(errorName,errorRoutings){
+
+        if(!errorRoutings){
+            return [];
+        }
+
+        var buffer=null;
+        if(errorRoutings[errorName]){
+            buffer=errorRoutings[errorName];
+        }
+
+        if(!buffer){
+            return;
+        }
+
+        var buff=buffer.split("@");
+        var getRoute={
+            shell:buff[0],
+            action:buff[1],
+        };    
+        return getRoute;
+        
     },
 
     /**

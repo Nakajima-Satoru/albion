@@ -15,6 +15,7 @@ module.exports={
     sync:require("./core/sync.js"),
     http:require("./core/http.js"),
     text:require("./core/text.js"),
+    consoleCommand:require("./core/consoleCommand.js"),
     CLI:require("./core/cli.js"),
     Core:require("./core/Core.js"),
     Controller:require("./core/Controller.js"),

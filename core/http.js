@@ -11,6 +11,7 @@
  */
 
 const fs = require('fs');
+const os = require('os');
 const generator = require("./generator.js");
 const requestObject = require("./ro.js");
 
@@ -78,6 +79,12 @@ module.exports={
                 key: fs.readFileSync(config.sslServerKey),
                 cert: fs.readFileSync(config.sslServerCrt)
         };
+
+        var hostName="localhost";
+        if(config.host){
+            hostName=config.host;
+        }
+
         https.createServer(options, function (req,res) {
 
             var requestObj=new requestObject({
@@ -97,7 +104,14 @@ module.exports={
                 generator.error(requestObj,err);
             }
 
-        }).listen(443);
+        }).listen(config.port,hostName,function(){
+            var port="";
+            if(config.port!=80){
+                port=config.port;
+            }
+            console.log("Server running at https://"+hostName+":"+port+"/");
+            console.log("....");
+        });
     
     },
 
@@ -116,7 +130,11 @@ module.exports={
         }
 
         console.log("# SERVER LISTEN START PORT="+config.port);
-        console.log("....");
+  
+        var hostName="localhost";
+        if(config.host){
+            hostName=config.host;
+        }
 
         http.createServer({},function(req,res){
 
@@ -138,7 +156,14 @@ module.exports={
                 generator.error(requestObj,err);
             }
 
-        }).listen(config.port);
+        }).listen(config.port,hostName,function(){
+            var port="";
+            if(config.port!=80){
+                port=config.port;
+            }
+            console.log("Server running at http://"+hostName+":"+port+"/");
+            console.log("....");
+        });
 
     },
 
