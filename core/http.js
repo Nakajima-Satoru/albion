@@ -24,7 +24,13 @@ module.exports={
      * @returns 
      */
     listen:function(basePath,name){
-
+/*
+        setInterval(function(){
+            var p=process.memoryUsage();
+            fs.appendFile("memory.log",p.rss+"\n",function(){});
+            delete p;
+        },1000);
+*/
         var configPath=basePath+"/"+name+"/config/app.js";
 
         if(!fs.existsSync(configPath)){
@@ -37,6 +43,8 @@ module.exports={
         if(!config.templateEnging){
             config.templateEnging="ejs";
         }
+
+        this.garbageCollect(config);
 
         if(config.https){
             this.listenhttps(basePath,name,config);
@@ -164,6 +172,21 @@ module.exports={
             console.log("Server running at http://"+hostName+":"+port+"/");
             console.log("....");
         });
+
+    },
+
+    /**
+     * garbageCollect
+     * @param {*} config 
+     */
+    garbageCollect:function(config){
+
+        if(config.garbageCollectionInterval){
+            var gcInterval=config.garbageCollectionInterval;
+            setInterval(function(){
+                global.gc();
+            },gcInterval*1000);
+        }
 
     },
 

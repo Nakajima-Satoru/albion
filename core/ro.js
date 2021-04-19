@@ -124,6 +124,8 @@ var requestObject=function(params){
                     this.logWrite.error(this.error.stack);
                 }    
             }
+
+            ro=null;
         }
     };
 
