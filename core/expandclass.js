@@ -11,6 +11,7 @@
  */
 
 const fs = require("fs");
+const path = require("path");
 const text = require("./text.js");
 
 const expandClass=function(ro,classType){
@@ -51,13 +52,17 @@ const expandClass=function(ro,classType){
 
         var classFullName = className+classType;
 
-        var path=ro.project.path+"/app/"+classType+"/"+classFullName+".js";
+        var _path=ro.project.path+"/app/"+classType+"/"+classFullName+".js";
 
-        if(!fs.existsSync(path)){
+        if(!fs.existsSync(_path)){
             return;
         }
 
-        var _class = require(path);
+        if(!ro.project.config.requireCache){
+            delete(require.cache[path.resolve(_path)]);
+        }
+
+        var _class = require(_path);
 
         var _o = new _class(ro,option);
 

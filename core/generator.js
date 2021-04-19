@@ -16,7 +16,6 @@ const path = require("path");
 const routing = require("./routing.js");
 const sync = require("./sync.js");
 const text = require("./text.js");
-const { resolve } = require("path");
 
 module.exports={
     
@@ -192,8 +191,13 @@ module.exports={
             throw new Error("\""+controllerFullName+"\" file not Found.");
         }
 
-        var _c = require(controllerPath);
+        if(!ro.project.config.requireCache){
+            console.log(require.cache[path.resolve(controllerPath)]);
+            delete(require.cache[path.resolve(controllerPath)]);
+        }
 
+        var _c = require(controllerPath);
+        
         var cont=new _c(ro);
 
         if(!cont[ro.route.action]){
