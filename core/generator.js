@@ -192,7 +192,6 @@ module.exports={
         }
 
         if(!ro.project.config.requireCache){
-            console.log(require.cache[path.resolve(controllerPath)]);
             delete(require.cache[path.resolve(controllerPath)]);
         }
 
