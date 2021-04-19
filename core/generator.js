@@ -16,6 +16,7 @@ const path = require("path");
 const routing = require("./routing.js");
 const sync = require("./sync.js");
 const text = require("./text.js");
+const { resolve } = require("path");
 
 module.exports={
     
@@ -146,6 +147,11 @@ module.exports={
 
         var errorName=error.name;
 
+        if(!ro.status() || ro.status()==200){
+            ro.status(500);
+        }
+        ro.error=error;
+        
         var getErrorRoute=routing.getError(errorName, ro.project.config.routing.error);
 
         if(!getErrorRoute){

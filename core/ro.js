@@ -115,6 +115,15 @@ var requestObject=function(params){
             }
             this.response.writeHead(_status,setHeader);
             this.response.end(this._str,option);    
+
+            var status=parseInt(this.status());
+
+            if(!(status>=400 && status<=499)){
+                this.logWrite.access();
+                if(status!=200){
+                    this.logWrite.error(this.error.stack);
+                }    
+            }
         }
     };
 
@@ -520,6 +529,111 @@ var requestObject=function(params){
             else{
                 _put={};
             }
+        },
+    };
+
+    /**
+     * logWrite
+     */
+    this.logWrite={
+
+        /**
+         * convert
+         * @param {*} format 
+         * @param {*} content 
+         * @returns 
+         */
+        convert:function(format,content){
+
+            if(!content){
+                content="";
+            }
+
+            format=format.split("[datetime]").join(text.dateFormat(null,"Y/m/d H:i:s"));
+            format=format.split("[year]").join(text.dateFormat(null,"Y"));
+            format=format.split("[month]").join(text.dateFormat(null,"m"));
+            format=format.split("[day]").join(text.dateFormat(null,"d"));
+            format=format.split("[method]").join(cont.method);
+            format=format.split("[requestUrl]").join(cont.request.url);
+            format=format.split("[responseCode]").join(cont.status());
+            format=format.split("[remoteIp]").join(cont.request.connection.remoteAddress);
+            format=format.split("[content]").join(content);
+
+            return format;
+        },
+
+        /**
+         * _
+         * @param {*} type 
+         * @param {*} fileName 
+         * @param {*} content 
+         */
+        _:function(type, fileName, content){
+
+            if(!fs.existsSync(cont.project.path+"/.log")){
+                fs.mkdirSync(cont.project.path+"/.log");
+            }
+
+            if(type){
+                if(cont.project.config.log[type].file){
+                    fileName=cont.project.config.log[type].file;
+                }    
+            }
+            fileName=cont.logWrite.convert(fileName);
+
+            var appendPath=cont.project.path+"/.log/"+fileName;
+        
+            var format=content;
+            if(type){
+                format=cont.project.config.log[type].format;
+            }              
+            format=cont.logWrite.convert(format,content);
+
+            fs.appendFileSync(appendPath,format+"\n");
+    
+        },
+
+        /**
+         * normal
+         * @param {*} fileName 
+         * @param {*} content 
+         */
+        normal:function(fileName,content){
+            cont.logWrite._("",fileName,content);
+        },
+
+        /**
+         * access
+         */
+        access:function(){
+
+            if(!cont.project.config.log){
+                return;
+            }
+        
+            if(!cont.project.config.log.access){
+                return;
+            }
+
+            cont.logWrite._("access","access.log");
+        },
+
+        /**
+         * error
+         * @param {*} content 
+         * @returns 
+         */
+        error:function(content){
+
+            if(!cont.project.config.log){
+                return;
+            }
+        
+            if(!cont.project.config.log.error){
+                return;
+            }
+        
+            cont.logWrite._("error","error.log",content);
         },
     };
 
