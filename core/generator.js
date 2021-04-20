@@ -66,13 +66,26 @@ module.exports={
                 else if(ro.method=="PUT"){
                     ro.put.set(_postData);
                 }
-                cont.setController(ro);
+
+                if(getRoute.type == "controller"){
+                    cont.setController(ro);
+                }
+                else if(getRoute.type == "function"){
+                    cont.setFunction(ro);
+                }
       
             });
 
         }
         else{
-            this.setController(ro);
+            
+            if(getRoute.type == "controller"){
+                this.setController(ro);
+            }
+            else if(getRoute.type == "function"){
+                this.setFunction(ro);
+            }
+
         }
 
     },
@@ -150,8 +163,8 @@ module.exports={
             ro.status(500);
         }
         ro.error=error;
-        
-        var getErrorRoute=routing.getError(errorName, ro.project.config.routing.error);
+
+        var getErrorRoute=routing.getError(ro.request.url,errorName, ro.project.config.routing.error);
 
         if(!getErrorRoute){
             this.simpleErrorOutput(ro,error);
@@ -287,6 +300,32 @@ module.exports={
 
     },
 
+    setFunction:function(ro){
+
+        var _sync=new FunctionSync();
+
+        sync([
+            function(next){
+                _sync.next=function(){
+                    this._waited=false;
+                    next();
+                };
+                next();    
+            },
+            function(next){
+                ro.route.function(ro,_sync);
+
+                if(!_sync._waited){
+                    next();
+                }
+            },
+            function(){
+                ro.exit();
+            },
+        ]);
+
+    },
+
     /**
      * simpleErrorOutput
      * @param {*} ro 
@@ -382,5 +421,14 @@ module.exports={
         }
 
     },
+
+};
+const FunctionSync=function(){
+
+    this._waited=false;
+
+    this.wait=function(){
+        this._waited=true;
+    };
 
 };

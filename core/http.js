@@ -13,6 +13,7 @@
 const fs = require('fs');
 const os = require('os');
 const generator = require("./generator.js");
+const routing = require("./routing.js");
 const requestObject = require("./ro.js");
 
 module.exports={
@@ -40,9 +41,7 @@ module.exports={
 
         var config=require(basePath+"/"+name+"/config/app.js");
 
-        if(!config.templateEnging){
-            config.templateEnging="ejs";
-        }
+        config = this.setConfig(config);
 
         this.garbageCollect(config);
 
@@ -53,6 +52,28 @@ module.exports={
             this.listenhttp(basePath,name,config);
         }
 
+    },
+
+    /**
+     * setConfig
+     * @param {*} config 
+     * @returns 
+     */
+    setConfig:function(config){
+
+        if(!config.templateEnging){
+            config.templateEnging="ejs";
+        }
+
+        if(config.routing.releaseScope){
+            config.routing.release = routing.convertiongScope(config.routing.release);
+        }
+
+        if(config.routing.errorScope){
+            config.routing.error = routing.convertiongScopeError(config.routing.error);
+        }
+
+        return config;
     },
 
     /**

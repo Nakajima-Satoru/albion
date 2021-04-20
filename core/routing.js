@@ -15,6 +15,62 @@ const path = require("path");
 module.exports={
 
     /**
+     * convertiongScope
+     * @param {*} routings 
+     * @returns 
+     */
+    convertiongScope:function(routings){
+
+        var buffer={};
+
+        var colum1=Object.keys(routings);
+        for(var n=0;n<colum1.length;n++){
+            var scope=colum1[n];
+            var value1=routings[scope];
+
+            if(scope=="/"){ scope=""; }
+
+            var colum2=Object.keys(value1);
+            for(var n2=0;n2<colum2.length;n2++){
+                var url=colum2[n2];
+                var param=value1[url];
+
+                if(url=="/"){ url=""; }
+
+                var fullUrl=scope+url;
+                if(fullUrl==""){ fullUrl="/"; }
+                
+                buffer[fullUrl]=param;
+            }
+        }
+
+        return buffer;
+    },
+
+    convertiongScopeError:function(routings){
+        
+        var buffer={};
+
+        var colum1=Object.keys(routings);
+        for(var n=0;n<colum1.length;n++){
+            var scope=colum1[n];
+            var value1=routings[scope];
+
+            var colum2=Object.keys(value1);
+            for(var n2=0;n2<colum2.length;n2++){
+                var ErrorClass=colum2[n2];
+                var param=value1[ErrorClass];
+
+                var fullUrl=scope+":"+ErrorClass;
+                
+                buffer[fullUrl]=param;
+            }
+        }
+
+        return buffer;
+    },
+
+    /**
      * get
      * @param {*} request 
      * @param {*} routeConfigs 
@@ -44,14 +100,26 @@ module.exports={
             return;
         }
 
-        var buff=buffer[0].split("@");
-        var getRoute={
-            controller:buff[0],
-            action:buff[1],
-            aregment:buffer[1],
-        };    
-        getRoute.hash=hash;
-        getRoute.query=this.convertQuery(query);    
+        if(typeof buffer[0] == "string"){
+            var buff=buffer[0].split("@");
+            var getRoute={
+                type:"controller",
+                controller:buff[0],
+                action:buff[1],
+                aregment:buffer[1],
+            };    
+            getRoute.hash=hash;
+            getRoute.query=this.convertQuery(query);        
+        }
+        else if(typeof buffer[0] == "function"){
+            var getRoute={
+                type:"function",
+                function:buffer[0],
+                aregment:buffer[1],
+            };    
+            getRoute.hash=hash;
+            getRoute.query=this.convertQuery(query);      
+        }
 
         return getRoute;
     },
@@ -133,7 +201,7 @@ module.exports={
      * @param {*} errorRoutings 
      * @returns 
      */
-    getError:function(errorName,errorRoutings){
+    getError:function(url,errorName,errorRoutings){
 
         if(!errorRoutings){
             return [];
@@ -142,6 +210,28 @@ module.exports={
         var buffer=null;
         if(errorRoutings[errorName]){
             buffer=errorRoutings[errorName];
+        }
+
+        if(!buffer){
+            var urls=url.split("/");
+            urls.shift();
+            var scope="/"+urls[0]+":"+errorName;
+
+            var colum=Object.keys(errorRoutings);
+            for(var n=0;n<colum.length;n++){
+                var errorNameOnScope=colum[n];
+                var errorParam=errorRoutings[errorNameOnScope];
+
+                if(errorNameOnScope=="/:"+errorName){
+                    buffer=errorParam;
+                }
+
+                if(errorNameOnScope==scope){
+                    buffer=errorParam;
+                    break;
+                }
+            }
+
         }
 
         if(!buffer){
