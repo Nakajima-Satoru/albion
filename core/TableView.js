@@ -10,9 +10,9 @@
  * ==================================================
  */
 
-const Core = require("./Core.js");
+const Table = require("./Table.js");
 
-module.exports=class TableView extends Core{
+module.exports=class TableView extends Table{
 
 
 };

@@ -216,7 +216,7 @@ var requestObject=function(params){
      * @returns 
      */
     this.autoRender=function(status){
-        if(status){
+        if(typeof status == "boolean"){
             _autoRender=status;
             return this;
         }

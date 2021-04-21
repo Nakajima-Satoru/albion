@@ -25,20 +25,7 @@ module.exports=class Table extends Core{
         const albionOrm = require("albion_orm");
         this._orm=new albionOrm(this);
 
-        if(ro.project.config.database.default){
-            var defaultConectData=ro.project.config.database.default;
-            this._orm.connection(defaultConectData);
-        }
-
-        var defaultTableName = this.constructor.name.replace("Table","");
-        defaultTableName=defaultTableName.toLowerCase();
-
-        var prefix="";
-        if(ro.project.config.database.default.prefix){
-            prefix=ro.project.config.database.default.prefix;
-        }
-        this.setTable(prefix+defaultTableName);
-
+        this.changeDb();
     }
 
     /**
@@ -48,6 +35,44 @@ module.exports=class Table extends Core{
      */
     connection(params){
         return this._orm.connection(params);
+    }
+
+    /**
+     * changeDb
+     * @param {*} databaseName 
+     * @returns 
+     */
+    changeDb(databaseName){
+
+        if(!databaseName){
+            databaseName="default";
+        }
+
+        if(typeof databaseName=="string"){
+
+            if(!this.ro.project.config.database[databaseName]){
+                return false;
+            }
+    
+            var dbn=this.ro.project.config.database[databaseName];
+            this._orm.connection(dbn);
+    
+        }
+        else if(typeof databaseName == "object"){
+            this._orm.connection(databaseName);
+        }
+        
+        var prefix="";
+        if(dbn.prefix){
+            prefix=dbn.prefix;
+        }
+
+        var defaultTableName = this.constructor.name.replace("Table","");
+        defaultTableName=defaultTableName.toLowerCase();
+
+        this.setTable(prefix+defaultTableName);
+
+        return true;
     }
 
     /**
