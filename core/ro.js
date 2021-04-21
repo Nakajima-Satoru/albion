@@ -67,19 +67,24 @@ var requestObject=function(params){
      * @returns 
      */
     this.header=function(option){
-        var colum=Object.keys(option);
-        for(var n=0;n<colum.length;n++){
-            var field=colum[n];
-            var value=option[field];
-
-            if(value){
-                _header[field]=value;
+        if(option){
+            var colum=Object.keys(option);
+            for(var n=0;n<colum.length;n++){
+                var field=colum[n];
+                var value=option[field];
+    
+                if(value){
+                    _header[field]=value;
+                }
+                else{
+                    delete _header[field];                
+                }
             }
-            else{
-                delete _header[field];                
-            }
+            return this;    
         }
-        return this;
+        else{
+            return _header;
+        }
     };
 
     /**
@@ -125,7 +130,7 @@ var requestObject=function(params){
                 }    
             }
 
-            ro=null;
+          //  ro=null;
         }
     };
 
@@ -246,7 +251,7 @@ var requestObject=function(params){
      * @returns 
      */
     this.template=function(templateName){
-        if(templateName){
+        if(templateName != undefined){
             _template=templateName;
             return this;
         }
@@ -261,7 +266,7 @@ var requestObject=function(params){
      * @returns 
      */
     this.view=function(viewName){
-        if(viewName){
+        if(viewName != undefined){
             _view=viewName;
             return this;
         }
