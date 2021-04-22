@@ -657,7 +657,6 @@ var requestObject=function(params){
         const generator = require("./generator.js");
         generator.error(this,error);
 
-        this.exit();
     };
     
 };
