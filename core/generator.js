@@ -168,6 +168,7 @@ module.exports={
 
         if(!getErrorRoute){
             this.simpleErrorOutput(ro,error);
+            return;
         }
 
         var _beforeRoute=ro.route;

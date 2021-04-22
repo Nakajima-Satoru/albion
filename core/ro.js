@@ -12,6 +12,7 @@
 
 var text = require("./text.js");
 var fs = require("fs");
+const garbage = require("./garbage.js");
 
 var requestObject=function(params){
 
@@ -130,7 +131,7 @@ var requestObject=function(params){
                 }    
             }
 
-          //  ro=null;
+            garbage(this);
         }
     };
 
@@ -644,5 +645,20 @@ var requestObject=function(params){
         },
     };
 
+    /**
+     * throw
+     * @param {*} errorMessage
+     */
+    this.throw=function(errorMessage){
+
+        var error=new Error();
+        error.message="[ALB_ERROR]"+errorMessage;
+
+        const generator = require("./generator.js");
+        generator.error(this,error);
+
+        this.exit();
+    };
+    
 };
 module.exports=requestObject;

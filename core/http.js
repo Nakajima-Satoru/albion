@@ -22,10 +22,12 @@ module.exports={
      * listen
      * @param {*} basePath 
      * @param {*} name 
+     * @param {*} option 
      * @returns 
      */
-    listen:function(basePath,name){
-/*
+    listen:function(basePath,name,option){
+
+/**
         setInterval(function(){
             var p=process.memoryUsage();
             fs.appendFile("memory.log",p.rss+"\n",function(){});
@@ -40,6 +42,12 @@ module.exports={
         }
 
         var config=require(basePath+"/"+name+"/config/app.js");
+
+        if(option){
+            if(option.port){
+                config.port=option.port;
+            }    
+        }
 
         config = this.setConfig(config);
 
