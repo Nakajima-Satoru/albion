@@ -206,23 +206,57 @@ module.exports=class Table extends Core{
     /**
      * delete
      * @param {*} params 
-     * @param {*} option 
      * @param {*} callback 
      * @returns 
      */
-    delete(params,option,callback){
-        return this._orm.delete(params,option,callback);
+    delete(params,callback){
+        return this._orm.delete(params,callback);
     }
 
+    /**
+     * physicalDeleteSql
+     * @param {*} params 
+     * @returns 
+     */
+    physicalDeleteSql(params){
+        return this._orm.physicalDeleteSql(params);
+    }
+
+    /**
+     * logicalDelete
+     * @param {*} params 
+     * @param {*} callback 
+     * @returns 
+     */
+    logicalDelete(params,callback){
+        return this._orm.logicalDelete(params,callback);
+    }
+
+    /**
+     * logicalDeleteSql
+     * @param {*} params 
+     * @returns 
+     */
+     logicalDeleteSql(params){
+        return this._orm.logicalDeleteSql(params);
+    }
 
     /**
      * revert
      * @param {*} params 
-     * @param {*} option 
      * @param {*} callback 
+     * @returns 
      */
-    revert(params,option,callback){
-        return this._orm.revert(params,option,callback);
+    revert(params,callback){
+        return this._orm.revert(params,callback);
+    }
+
+    /**
+     * revertSql
+     * @param {*} params 
+     */
+    revertSql(params){
+        return this._orm.revertSql(params);
     }
 
     /**
