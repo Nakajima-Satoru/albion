@@ -14,6 +14,11 @@ const Core = require("./Core.js");
 
 module.exports = class Shell extends Core{
 
+    constructor(ro){
+        super(ro);
 
+        console.log(ro);
+        
+    }
 
 };

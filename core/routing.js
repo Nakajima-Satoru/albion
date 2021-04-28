@@ -192,6 +192,10 @@ module.exports={
             return;
         }
 
+        if(ignorePath=="/"){
+            return assetsPath+url;
+        }
+        
         return assetsPath+url.replace(ignorePath,"");
     },
 

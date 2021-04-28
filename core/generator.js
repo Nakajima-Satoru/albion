@@ -31,6 +31,7 @@ module.exports={
 
         if(!getRoute){
             var getRouteAsset = routing.getAssets(ro.request,ro.project.config.routing.assets);
+console.log(getRouteAsset);
 
             if(getRouteAsset){
                 this.goAssets(ro,getRouteAsset);
@@ -116,9 +117,9 @@ module.exports={
                 for(var n=0;n<indexFiles.length;n++){
                     var fileName=indexFiles[n];
 
-                    if(fs.statSync(_path+fileName)){
+                    if(fs.statSync(_path+"/"+fileName)){
                         juge=true;
-                        _path+=fileName;
+                        _path+="/"+fileName;
                         break;
                     }
                 }
