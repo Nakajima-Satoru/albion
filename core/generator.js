@@ -16,6 +16,7 @@ const path = require("path");
 const routing = require("./routing.js");
 const sync = require("./sync.js");
 const text = require("./text.js");
+const garbage = require("./garbage.js");
 
 module.exports={
     
@@ -148,6 +149,8 @@ module.exports={
             "Cache-Control":cacheControl,
         });
         ro.exit(content,"binary");
+        
+        garbage(ro);
     },
 
     /**
@@ -294,8 +297,9 @@ module.exports={
                 next();
 
             },
-            function(next){
+            function(){
                 ro.exit();
+                garbage(ro);
             },
        ]);
 
@@ -322,6 +326,7 @@ module.exports={
             },
             function(){
                 ro.exit();
+                garbage(ro);
             },
         ]);
 
@@ -346,6 +351,7 @@ module.exports={
             ro.exit("<pre>Invalid Error.</pre>");
         }
 
+        garbage(ro);
     },
 
     /**
