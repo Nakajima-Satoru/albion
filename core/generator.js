@@ -31,7 +31,6 @@ module.exports={
 
         if(!getRoute){
             var getRouteAsset = routing.getAssets(ro.request,ro.project.config.routing.assets);
-console.log(getRouteAsset);
 
             if(getRouteAsset){
                 this.goAssets(ro,getRouteAsset);

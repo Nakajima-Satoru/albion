@@ -250,17 +250,25 @@ module.exports={
         return getRoute;
     },
 
+    /**
+     * getShellError
+     * @param {*} errorName 
+     * @param {*} errorRoutings 
+     * @returns 
+     */
     getShellError:function(errorName,errorRoutings){
 
         if(!errorRoutings){
             return [];
         }
 
+
         var buffer=null;
         if(errorRoutings[errorName]){
             buffer=errorRoutings[errorName];
         }
 
+        console.log(errorRoutings);
         if(!buffer){
             return;
         }

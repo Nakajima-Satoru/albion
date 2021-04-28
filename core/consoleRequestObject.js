@@ -3,15 +3,16 @@
  * 
  * ALBION Ver 1.0.0
  * 
- * Shell.js
+ * consoleRequestObject.js (ConsoleRequestObject)
  * 
  * CopyLight: Nakajima-Satoru since 0201/04/16
  * 
  * ==================================================
  */
 
-const Core = require("./Core.js");
+const ConsoleRequestObject = function(){
 
-module.exports = class Shell extends Core{
+    this.commandMode = true;
 
 };
+module.exports = ConsoleRequestObject;

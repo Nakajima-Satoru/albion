@@ -14,11 +14,19 @@ const fs = require("fs");
 const routing = require("./routing.js");
 const text = require("./text.js");
 const sync = require("./sync.js");
+const ConsoleRequestObject = require("./consoleRequestObject.js");
 
 const consoleCommand = function(){
 
     var _path="";
 
+    /**
+     * go
+     * @param {*} basePath 
+     * @param {*} path 
+     * @param {*} cmd 
+     * @returns 
+     */
     this.go = function(basePath,path,cmd){
 
         _path=basePath+"/"+path;
@@ -44,6 +52,11 @@ const consoleCommand = function(){
         }
     };
 
+    /**
+     * routeCheck
+     * @param {*} request 
+     * @param {*} config 
+     */
     this.routeCheck=function(request,config){
 
         var getRoute = routing.getShell(request,config.routing.shell);
@@ -55,6 +68,11 @@ const consoleCommand = function(){
         this.setShell(getRoute);
     };
 
+    /**
+     * setShell
+     * @param {*} getRoute 
+     * @param {*} errorexception 
+     */
     this.setShell=function(getRoute,errorexception){
 
         var shellName=text.ucfirst(getRoute.shell)+"Shell";
@@ -67,7 +85,9 @@ const consoleCommand = function(){
 
         var _s = require(shellPath);
 
-        var cont=new _s();
+        var cro=new ConsoleRequestObject();
+
+        var cont=new _s(cro);
 
         if(!cont[getRoute.action]){
             throw new Error("The \""+getRoute.action+"\" method of \""+shellName+"\" is not specified.");
@@ -146,14 +166,21 @@ const consoleCommand = function(){
 
     };
 
+    /**
+     * error
+     * @param {*} error 
+     * @param {*} config 
+     * @returns 
+     */
     this.error=function(error,config){
 
         var errorName=error.name;
 
-        var getErrorRoute=routing.getShellError(errorName,config.routing.error);
+        var getErrorRoute=routing.getShellError(errorName,config.routing.shellError);
 
         if(!getErrorRoute){
             this.simpleErrorOutput(error);
+            return;
         }
 
         try{
@@ -165,6 +192,11 @@ const consoleCommand = function(){
 
     };
 
+    /**
+     * simpleErrorOutput
+     * @param {*} error 
+     * @param {*} error2nd 
+     */
     this.simpleErrorOutput=function(error,error2nd){
         console.log(error.stack);
     };

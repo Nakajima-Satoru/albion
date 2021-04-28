@@ -32,7 +32,7 @@ module.exports=class Core{
             }
         }
 
-        if(ro){
+        if(!ro.commandMode){
             if(ro.project.config.useClass){
 
                 var length=ro.project.config.useClass.length;
