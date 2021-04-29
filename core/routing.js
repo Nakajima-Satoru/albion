@@ -268,7 +268,6 @@ module.exports={
             buffer=errorRoutings[errorName];
         }
 
-        console.log(errorRoutings);
         if(!buffer){
             return;
         }

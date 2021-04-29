@@ -9,84 +9,76 @@
  * 
  * ==================================================
  */
-process.stdin.setEncoding('utf8');
+const CLI=function(){
 
-const CLI=function(setList){
+    process.stdin.resume();
+    process.stdin.setEncoding('utf8');
 
-    if(!setList){
-        setList=[];
-    }
+    var reader = require('readline').createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    var requestCallback=[];
+    var requestIndex=0;
 
+    reader.on('line', function(value){
+        requestIndex++;
+        var retake=function(){
+            requestIndex--;
+        };
+        requestCallback[requestIndex-1](value,retake);
+        return true;
+    });
+
+    process.stdin.on('end', function () {
+        //do something
+    });
+
+    this.commandMode = true;
+    
     /**
-     * push
-     * @param {*} callback 
+     * echo
+     * @param {*} str 
+     * @param {*} color 
      * @returns 
      */
-    this.push=function(callback){
-        setList.push(callback);
+    this.echo=function(str,color){
+        var strings=str.toString();
+
+        var colors={
+            black   : '\u001b[30m',
+            red     : '\u001b[31m',
+            green   : '\u001b[32m',
+            yellow  : '\u001b[33m',
+            blue    : '\u001b[34m',
+            magenta : '\u001b[35m',
+            cyan    : '\u001b[36m',
+            white   : '\u001b[37m',
+        };
+
+        if(color){
+            strings=colors[color]+strings+colors.white;
+        }
+
+        process.stdout.write(strings);
         return this;
     };
 
     /**
-     * start
-     * @param {*} option 
+     * input
+     * @param {*} callback 
+     * @returns 
      */
-    this.start=function(option){
+    this.input=function(callback){
+        requestCallback.push(callback);
+        return this;
+    };
 
-        if(!option){
-            option={};
-        }
-
-        var _index=0;
-     
-        var reader = require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-    
-        var callObj={
-                retake:function(){
-                    _index--;
-                    setList[_index](callObj);
-                },
-                out:function(string){
-                    var indent="";
-                    if(option.indent){
-                        indent=option.indent;
-                    }
-                    process.stdout.write(indent+string);
-                    return this;
-                },
-                next:function(){
-                    _index++;
-                    setList[_index](callObj);
-                },
-                end:function(){
-                    process.exit();
-                },
-        };
-
-        setList[_index](callObj);
-            
-        reader.on('line', function(value){
-    
-            callObj.value=value;
-    
-            _index++;
-    
-            if(setList[_index]){
-                setList[_index](callObj);
-            }
-            else{
-                process.stdin.end();
-            }
-    
-        });
-    
-        process.stdin.on('end', function(){
-    
-        });
-        
+    /**
+     * exit
+     */
+    this.exit=function(){
+        process.exit(0);
     };
 
 };

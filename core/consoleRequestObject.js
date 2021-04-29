@@ -9,10 +9,19 @@
  * 
  * ==================================================
  */
+const CLI = require("./cli.js");
 
 const ConsoleRequestObject = function(){
 
-    this.commandMode = true;
+    var cli=new CLI();
+
+    var cliColum=Object.keys(cli);
+    for(var n=0;n<cliColum.length;n++){
+        var field=cliColum[n];
+        var object=cli[field];
+
+        this[field]=object;
+    }
 
 };
 module.exports = ConsoleRequestObject;

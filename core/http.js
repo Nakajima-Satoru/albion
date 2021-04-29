@@ -73,12 +73,12 @@ module.exports={
             config.templateEnging="ejs";
         }
 
-        if(config.routing.releaseScope){
-            config.routing.release = routing.convertiongScope(config.routing.release);
+        if(config.routing.pages.releaseScope){
+            config.routing.pages.release = routing.convertiongScope(config.routing.pages.release);
         }
 
-        if(config.routing.errorScope){
-            config.routing.error = routing.convertiongScopeError(config.routing.error);
+        if(config.routing.pages.errorScope){
+            config.routing.pages.error = routing.convertiongScopeError(config.routing.pages.error);
         }
 
         return config;

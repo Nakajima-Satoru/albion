@@ -59,7 +59,7 @@ const consoleCommand = function(){
      */
     this.routeCheck=function(request,config){
 
-        var getRoute = routing.getShell(request,config.routing.shell);
+        var getRoute = routing.getShell(request,config.routing.shell.release);
 
         if(!getRoute){
             throw new Error("Access Page not found.");
@@ -176,7 +176,7 @@ const consoleCommand = function(){
 
         var errorName=error.name;
 
-        var getErrorRoute=routing.getShellError(errorName,config.routing.shellError);
+        var getErrorRoute=routing.getShellError(errorName,config.routing.shell.error);
 
         if(!getErrorRoute){
             this.simpleErrorOutput(error);

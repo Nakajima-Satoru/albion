@@ -27,7 +27,7 @@ module.exports={
      */
     go:function(ro){
 
-        var getRoute = routing.get(ro.request, ro.project.config.routing.release);
+        var getRoute = routing.get(ro.request, ro.project.config.routing.pages.release);
 
         if(!getRoute){
             var getRouteAsset = routing.getAssets(ro.request,ro.project.config.routing.assets);
@@ -167,7 +167,7 @@ module.exports={
         }
         ro.error=error;
 
-        var getErrorRoute=routing.getError(ro.request.url,errorName, ro.project.config.routing.error);
+        var getErrorRoute=routing.getError(ro.request.url,errorName, ro.project.config.routing.pages.error);
 
         if(!getErrorRoute){
             this.simpleErrorOutput(ro,error);
