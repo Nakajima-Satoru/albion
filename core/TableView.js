@@ -273,7 +273,7 @@ module.exports=class TableView extends Core{
      * @param {*} field 
      * @param {*} callback 
      */
-    list=function(field,callback){
+    list(field,callback){
         var obj=this._setSelectObj();
         return obj.list(field,callback);
     }
