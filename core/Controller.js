@@ -32,6 +32,10 @@ module.exports=class Controller extends core{
      */
     _rendering(){
 
+        if(!Object.keys(this.ro).length){
+            return;            
+        }
+
         if(!this.ro.autoRender()){
             return;
         }

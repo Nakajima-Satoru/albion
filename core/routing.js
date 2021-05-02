@@ -367,7 +367,7 @@ module.exports={
                 }
             }
 
-            if(chk1[field].length!=urls.length){
+            if(chk1[field].length<urls.length){
                 juge=false;                                
             }
 

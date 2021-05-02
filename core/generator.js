@@ -298,6 +298,11 @@ module.exports={
 
             },
             function(){
+
+                if(!Object.keys(ro).length){
+                    return;            
+                }
+
                 ro.exit();
                 garbage(ro);
             },
@@ -325,6 +330,11 @@ module.exports={
                 }
             },
             function(){
+                            
+                if(!Object.keys(ro).length){
+                    return;            
+                }
+                
                 ro.exit();
                 garbage(ro);
             },
