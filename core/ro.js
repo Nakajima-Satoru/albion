@@ -250,7 +250,7 @@ var requestObject=function(params){
      * @returns 
      */
     this.template=function(templateName){
-        if(templateName != undefined){
+        if(templateName !== undefined){
             _template=templateName;
             return this;
         }
@@ -265,7 +265,7 @@ var requestObject=function(params){
      * @returns 
      */
     this.view=function(viewName){
-        if(viewName != undefined){
+        if(viewName !== undefined){
             _view=viewName;
             return this;
         }
