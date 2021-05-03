@@ -54,7 +54,10 @@ module.exports={
 
             // get post data
             ro.request.on('data', function(chunk){
-                _postData += chunk.toString();
+                chunk=chunk.toString().split("+").join(" ");
+                chunk=chunk.toString().split("%2B").join("+");
+                chunk=decodeURIComponent(chunk);
+                _postData += chunk;
             });
 
             ro.request.on('end', function(){
@@ -383,7 +386,8 @@ module.exports={
 
         }
         else{
-            postDataStr=decodeURI(postDataStr);
+
+       //     postDataStr=decodeURIComponent(postDataStr);
 
             var buff=postDataStr.split("&");
 
