@@ -305,7 +305,12 @@ var requestObject=function(params){
 
             if(cont.project.config.templateEnging=="ejs"){
                 var ejs=require("ejs");
-                string = ejs.render(string, cont.getData());                
+
+                if(cont.myClass.Ui){
+                    cont.setData("Ui",cont.myClass.Ui);
+                }
+
+                string = ejs.render(string, cont.getData());
             }
 
             return string;
@@ -333,6 +338,11 @@ var requestObject=function(params){
 
             if(cont.project.config.templateEnging=="ejs"){
                 var ejs=require("ejs");
+
+                if(cont.myClass.Ui){
+                    cont.setData("Ui",cont.myClass.Ui);
+                }
+
                 string = ejs.render(string, cont.getData());
             }
     
@@ -362,6 +372,11 @@ var requestObject=function(params){
 
             if(cont.project.config.templateEnging=="ejs"){
                 var ejs=require("ejs");
+
+                if(cont.myClass.Ui){
+                    cont.setData("Ui",cont.myClass.Ui);
+                }
+                
                 string = ejs.render(string, cont.getData());
             }
     

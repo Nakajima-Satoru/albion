@@ -10,9 +10,6 @@
  * ==================================================
  */
 
-const Core = require("./Core.js");
+ const Core = require("./Core.js");
 
-module.exposrts=class Ui extends Core{
-
-
-};
+ module.exports=class Ui extends Core{};

@@ -56,6 +56,10 @@ module.exports=class Controller extends core{
 
         var render = new Render(this.ro);
 
+        if(this.Ui){
+            render.Ui=this.Ui;
+        }
+        
         render.rendering();
 
     }

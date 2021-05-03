@@ -22,6 +22,7 @@ module.exports=class Core{
      */
     constructor(ro,option){
         this.ro=ro;
+        ro.myClass=this;
 
         if(option){
             var colum=Object.keys(option);
@@ -43,6 +44,7 @@ module.exports=class Core{
     
             }    
         }
+
     }
 
 
