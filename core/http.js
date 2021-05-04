@@ -137,7 +137,7 @@ module.exports={
             try{
                 generator.go(requestObj);
             }catch(err){
-                console.error(err);
+//                console.error(err);
                 generator.error(requestObj,err);
             }
 
@@ -146,8 +146,10 @@ module.exports={
             if(config.port!=80){
                 port=config.port;
             }
+            console.log("------------------------------------------------");
             console.log("Server running at https://"+hostName+":"+port+"/");
-            console.log("....");
+            console.log("..");
+            console.log("");
         });
     
     },
@@ -198,8 +200,10 @@ module.exports={
             if(config.port!=80){
                 port=config.port;
             }
+            console.log("------------------------------------------------");
             console.log("Server running at http://"+hostName+":"+port+"/");
-            console.log("....");
+            console.log("..");
+            console.log("");
         });
 
     },
