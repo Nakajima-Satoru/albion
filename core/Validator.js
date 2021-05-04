@@ -1,7 +1,7 @@
 /**
  * ==================================================
  * 
- * ALBION Ver 1.0.0
+ * FW_DAGGER Ver 1.0.0
  * 
  * Validator.js
  * 
@@ -11,7 +11,7 @@
  */
 
 const Core = require("./Core.js");
-const albionValidator = require("albion_validator");
+const daggerValidator = require("fw_dagger_validator");
 
 module.exports=class Validator extends Core{
 
@@ -22,7 +22,7 @@ module.exports=class Validator extends Core{
      */
     constructor(ro,option){
         super(ro,option);
-        this.validator = new albionValidator(this);
+        this.validator = new daggerValidator(this);
     }
 
     /**

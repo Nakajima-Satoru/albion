@@ -1,7 +1,7 @@
 /**
  * ==================================================
  * 
- * ALBION Ver 1.0.0
+ * FW_DAGGER Ver 1.0.0
  * 
  * Table.js
  * 
@@ -22,8 +22,8 @@ module.exports=class Table extends Core{
     constructor(ro,option){
         super(ro,option);
 
-        const albionOrm = require("albion_orm");
-        this._orm=new albionOrm(this);
+        const daggerOrm = require("fw_dagger_orm");
+        this._orm=new daggerOrm(this);
 
         this.changeDb();
     }

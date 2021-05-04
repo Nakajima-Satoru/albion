@@ -1,5 +1,5 @@
 {
-  "name": "albion",
+  "name": "fw_dagger",
   "version": "1.0.0",
   "description": "web framework.",
   "main": "index.js",
@@ -8,26 +8,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nakajima-Satoru/alvion.git"
+    "url": "git+https://github.com/Nakajima-Satoru/sw_dagger.git"
   },
   "keywords": [
     "framework",
     "web",
     "cms",
-    "mvc"
+    "mvc",
+    "fw_dagger"
   ],
   "author": "nakajima satoru",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Nakajima-Satoru/alvion/issues"
+    "url": "https://github.com/Nakajima-Satoru/fw_dagger/issues"
   },
-  "homepage": "https://github.com/Nakajima-Satoru/alvion#readme",
+  "homepage": "https://github.com/Nakajima-Satoru/fw_dagger#readme",
   "dependencies": {
-    "albion_command": "git+https://github.com/Nakajima-Satoru/albion_command.git",
-    "albion_validator": "git+https://github.com/Nakajima-Satoru/albion_validator.git",
-    "albion_orm": "git+https://github.com/Nakajima-Satoru/albion_orm.git",
-    "ejs": "~3.1.6",
-    "mysql":"=2.18.1",
-    "sqlite3":"=5.0.2"
+    "fw_dagger_command": "git+https://github.com/Nakajima-Satoru/fw_dagger_command.git",
+    "fw_dagger_validator": "git+https://github.com/Nakajima-Satoru/fw_dagger_validator.git",
+    "fw_dagger_orm": "git+https://github.com/Nakajima-Satoru/fw_dagger_orm.git",
+    "ejs": "~3.1.6"
   }
 }
