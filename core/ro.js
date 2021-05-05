@@ -155,9 +155,9 @@ var requestObject=function(params){
      */
     this.redirect=function(url){
         this
-            .status(301)
+            .status(302)
             .header({
-                location:url,
+                Location:url,
             })
             .exit();
     };
