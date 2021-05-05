@@ -347,7 +347,8 @@ var requestObject=function(params){
             var templatePath=cont.project.path+"/render/Template/"+templateName+".html";
 
             if(!fs.existsSync(templatePath)){
-                throw new Error("Unable to see Template file \""+templatePath+"\".");
+                var errorStr = "Unable to see Template file \""+templatePath+"\".";
+                return errorStr;
             }
 
             var string = fs.readFileSync(templatePath).toString();
@@ -377,7 +378,8 @@ var requestObject=function(params){
 
             if(!fs.existsSync(ElementPath)){
                 if(onErrorHandle){
-                    throw new Error("Unable to see Element file \""+ElementPath+"\".");
+                    var errorStr = "Unable to see Element file \""+ElementPath+"\".";
+                    return errorStr;
                 }
                 else{
                     return;
