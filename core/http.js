@@ -137,7 +137,6 @@ module.exports={
             try{
                 generator.go(requestObj);
             }catch(err){
-//                console.error(err);
                 generator.error(requestObj,err);
             }
 
@@ -191,7 +190,6 @@ module.exports={
                 generator.go(requestObj);
                 return;
             }catch(err){
-                console.error(err);
                 generator.error(requestObj,err);
             }
 

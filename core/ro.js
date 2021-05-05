@@ -127,7 +127,9 @@ var requestObject=function(params){
             if(!(status>=400 && status<=499)){
                 this.logWrite.access();
                 if(status!=200){
-                    this.logWrite.error(this.error.stack);
+                    if(this.error){
+                        this.logWrite.error(this.error.stack);
+                    }
                 }    
             }
         }
@@ -146,6 +148,20 @@ var requestObject=function(params){
         return this;
     };
 
+
+    /**
+     * redirect
+     * @param {*} url 
+     */
+    this.redirect=function(url){
+        this
+            .status(301)
+            .header({
+                location:url,
+            })
+            .exit();
+    };
+
     /**
      * sanitize
      * @param {*} string 
@@ -156,7 +172,6 @@ var requestObject=function(params){
         var saList={
             "<":"&lt;",
             ">":"&gt;",
-            " ":"&nbsp;",
             "&":"&amp;",
             "©":"&copy;",
             "®":"&reg;",
@@ -298,7 +313,8 @@ var requestObject=function(params){
             var viewPath=cont.project.path+"/render/View/"+text.ucfirst(cont.route.controller)+"/"+viewName+".html";
 
             if(!fs.existsSync(viewPath)){
-                throw new Error("Unable to see View file \""+viewPath+"\".");
+                var errorStr = "Unable to see View file \""+viewPath+"\".";
+                return errorStr;
             }
             
             var string = fs.readFileSync(viewPath).toString();

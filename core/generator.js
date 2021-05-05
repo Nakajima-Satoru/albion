@@ -353,6 +353,8 @@ module.exports={
      */
     simpleErrorOutput:function(ro,error,error2nd){
 
+        console.log(error.stack);
+
         if(ro.project.config.debugMode){
             var errorStr=error.stack
             if(error2nd){

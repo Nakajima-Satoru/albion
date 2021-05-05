@@ -67,7 +67,7 @@ module.exports=class Table extends Core{
             prefix=dbn.prefix;
         }
 
-        var defaultTableName = this.constructor.name.replace("Table","");
+        var defaultTableName = this.constructor.name.replace(new RegExp("Table$"),"");
         defaultTableName=defaultTableName.toLowerCase();
 
         this.setTable(prefix+defaultTableName);
@@ -136,10 +136,11 @@ module.exports=class Table extends Core{
     
     /**
      * check
+     * @param {*} callback 
      * @returns 
      */
-    check(){
-        return this._orm.check();
+    check(callback){
+        return this._orm.check(callback);
     }
 
     /**

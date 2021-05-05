@@ -16,6 +16,7 @@ module.exports={
     http:require("./core/http.js"),
     text:require("./core/text.js"),
     hash:require("./core/hash.js"),
+    dateFormat:require("./core/dateFormat.js"),
     consoleCommand:require("./core/consoleCommand.js"),
     CLI:require("./core/cli.js"),
     Core:require("./core/Core.js"),
