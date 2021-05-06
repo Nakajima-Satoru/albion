@@ -215,6 +215,16 @@ module.exports=class Table extends Core{
     }
 
     /**
+     * physicalDelete
+     * @param {*} params 
+     * @param {*} callback 
+     * @returns 
+     */
+    physicalDelete(params,callback){
+        return this._orm.physicalDelete(params,callback);
+    }
+
+    /**
      * physicalDeleteSql
      * @param {*} params 
      * @returns 
