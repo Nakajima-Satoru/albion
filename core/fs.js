@@ -19,6 +19,10 @@ var fs=require("fs");
  */
 fs.deepSearch=function(path){
 
+    if(!fs.existsSync(path)){
+        return null;
+    }
+
     var getDirList=fs.readdirSync(path);
 
     var list={

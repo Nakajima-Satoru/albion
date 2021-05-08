@@ -27,14 +27,15 @@ module.exports={
      */
     listen:function(basePath,name,option){
 
-/**
+        /*
         setInterval(function(){
-            var p=process.memoryUsage();
-            fs.appendFile("memory.log",p.rss+"\n",function(){});
+            var p = process.memoryUsage();
+            fs.appendFileSync("memory.log",p.rss+"\n");
             delete p;
         },1000);
-*/
-        var configPath=basePath+"/"+name+"/config/app.js";
+        */
+
+         var configPath=basePath+"/"+name+"/config/app.js";
 
         if(!fs.existsSync(configPath)){
             console.log("ERR: The configuration file was not found.\n\Path: \""+configPath+"\"")
@@ -42,6 +43,11 @@ module.exports={
         }
 
         var config=require(basePath+"/"+name+"/config/app.js");
+
+        if(config.requireCheck){
+            const allRequireCache = require("./allRequireCache.js");
+            allRequireCache(basePath,name,config);
+        }
 
         if(option){
             if(option.port){
