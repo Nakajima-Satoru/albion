@@ -26,15 +26,12 @@ module.exports={
      * @returns 
      */
     listen:function(basePath,name,option){
-
-        /*
+/*
         setInterval(function(){
-            var p = process.memoryUsage();
-            fs.appendFileSync("memory.log",p.rss+"\n");
-            delete p;
-        },1000);
-        */
-
+            global.gc();
+            fs.appendFileSync("memory.log",process.memoryUsage().heapUsed+"\n");
+        },3000);
+*/
          var configPath=basePath+"/"+name+"/config/app.js";
 
         if(!fs.existsSync(configPath)){
