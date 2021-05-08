@@ -25,7 +25,10 @@ var requestObject=function(params){
     this.project=params.project;
 
     var _status=200;
-    var _header={};
+    var _header={
+        "Connection": "keep-Alive",
+        "Keep-Alive":"timeout=5, max=98",
+    };
     var _exited=false;
     var _autoRender=false;
     var _render=null;
@@ -119,6 +122,8 @@ var requestObject=function(params){
                 var value=_header[field];
                 setHeader[field]=value;
             }
+            var length=this._str.length;
+            setHeader["Content-Length"]=length;
             this.response.writeHead(_status,setHeader);
             this.response.end(this._str,option);    
 
