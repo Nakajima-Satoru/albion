@@ -28,7 +28,7 @@ module.exports={
     listen:function(basePath,name,option){
 /*
         setInterval(function(){
-            global.gc();
+           // global.gc();
             fs.appendFileSync("memory.log",process.memoryUsage().heapUsed+"\n");
         },3000);
 */
@@ -41,18 +41,18 @@ module.exports={
 
         var config=require(basePath+"/"+name+"/config/app.js");
 
-        if(config.requireCheck){
-            const allRequireCache = require("./allRequireCache.js");
-            allRequireCache(basePath,name,config);
-        }
-
         if(option){
             if(option.port){
                 config.port=option.port;
             }    
         }
 
-        config = this.setConfig(config);
+        config = this.setConfig(basePath,name,config);
+
+        if(config.requireCheck){
+            const allRequireCache = require("./allRequireCache.js");
+            allRequireCache(basePath,name,config);
+        }
 
         this.garbageCollect(config);
 
@@ -67,10 +67,12 @@ module.exports={
 
     /**
      * setConfig
+     * @param {*} basePath 
+     * @param {*} name 
      * @param {*} config 
      * @returns 
      */
-    setConfig:function(config){
+    setConfig:function(basePath,name,config){
 
         if(!config.templateEnging){
             config.templateEnging="ejs";
@@ -82,6 +84,22 @@ module.exports={
 
         if(config.routing.pages.errorScope){
             config.routing.pages.error = routing.convertiongScopeError(config.routing.pages.error);
+        }
+
+        if(config.requires){
+            var buffers={};
+            for(var n=0;n<config.requires.length;n++){
+                var bname=config.requires[n];
+				console.log("## require \""+basePath+"/"+name+"/config/"+bname+".js\"");
+                try{
+                    var buff=require(basePath+"/"+name+"/config/"+bname+".js");
+                }catch(error){
+                    throw new Error(error.stack);
+                }
+                buffers[bname]=buff;
+            }
+
+            config.requires=buffers;
         }
 
         return config;
