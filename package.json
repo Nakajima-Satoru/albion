@@ -1,5 +1,5 @@
 {
-  "name": "fw_dagger",
+  "name": "m02",
   "version": "1.0.0",
   "description": "web framework.",
   "main": "index.js",
@@ -15,7 +15,7 @@
     "web",
     "cms",
     "mvc",
-    "fw_dagger"
+    "m02"
   ],
   "author": "nakajima satoru",
   "license": "MIT",

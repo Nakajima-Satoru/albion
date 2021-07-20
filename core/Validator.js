@@ -1,7 +1,7 @@
 /**
  * ==================================================
  * 
- * FW_DAGGER Ver 1.0.0
+ * m02
  * 
  * Validator.js
  * 
@@ -11,7 +11,7 @@
  */
 
 const Core = require("./Core.js");
-const daggerValidator = require("fw_dagger_validator");
+const validator = require("m02_validator");
 
 module.exports=class Validator extends Core{
 
@@ -22,7 +22,7 @@ module.exports=class Validator extends Core{
      */
     constructor(ro,option){
         super(ro,option);
-        this.validator = new daggerValidator(this);
+        this.validator = new validator(this);
     }
 
     /**

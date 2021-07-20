@@ -1,7 +1,7 @@
 /**
  * ==================================================
  * 
- * FW_DAGGER Ver 1.0.0
+ * m02
  * 
  * TableView.js
  * 
@@ -22,8 +22,8 @@ module.exports=class TableView extends Core{
     constructor(ro,option){
         super(ro,option);
 
-        const daggerOrm = require("fw_dagger_orm");
-        this._orm=new daggerOrm(this);
+        const orm = require("m02_orm");
+        this._orm=new orm(this);
 
         this.changeDb();
     }
